@@ -304,6 +304,11 @@
                             <i class="bi bi-circle"></i><span>Menu</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/stok">
+                            <i class="bi bi-circle"></i><span>Stok</span>
+                        </a>
+                    </li>
                 </ul>
             </li><!-- End Tables Nav -->
 
