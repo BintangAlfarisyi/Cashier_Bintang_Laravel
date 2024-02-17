@@ -309,6 +309,11 @@
                             <i class="bi bi-circle"></i><span>Stok</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/pelanggan">
+                            <i class="bi bi-circle"></i><span>Pelanggan</span>
+                        </a>
+                    </li>
                 </ul>
             </li><!-- End Tables Nav -->
 
