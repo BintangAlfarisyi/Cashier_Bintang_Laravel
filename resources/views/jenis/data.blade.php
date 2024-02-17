@@ -21,7 +21,7 @@
                     <form action="{{ route('jenis.destroy', $j->id) }}" method="post" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-delete btn-size" data-id="{{ $j->id }}" data-nama_jenis="{{ $j->nama_jenis }}">
+                        <button type="button" class="btn btn-danger btn-delete btn-size" data-id="{{ $j->id }}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </form>

@@ -29,7 +29,7 @@ class StoreKategoriRequest extends FormRequest
     public function messages()
     {
         return [
-            'nama_kategori.required' => 'Data Nama Kategori belum diisi!',
+            'nama_kategori.required' => 'Data Nama Kategori belum diisi!'
         ];
     }
 }

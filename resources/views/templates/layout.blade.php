@@ -214,10 +214,9 @@
                 </li><!-- End Messages Nav -->
 
                 <li class="nav-item dropdown pe-3">
-
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="{{ asset('admin') }}/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                        <img src="{{ asset('assets/bintang.jpg') }}" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Bintang Alfarisyi</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -265,7 +264,6 @@
                                 <span>Sign Out</span>
                             </a>
                         </li>
-
                     </ul><!-- End Profile Dropdown Items -->
                 </li><!-- End Profile Nav -->
 
@@ -299,6 +297,11 @@
                     <li>
                         <a href="/kategori">
                             <i class="bi bi-circle"></i><span>Kategori</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/menu">
+                            <i class="bi bi-circle"></i><span>Menu</span>
                         </a>
                     </li>
                 </ul>

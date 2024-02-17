@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 Route::resource('/jenis', JenisController::class);
 Route::resource('/kategori', KategoriController::class);
+Route::resource('/menu', MenuController::class);
 // Route::get('/dashboard', [HomeController::class, 'index']);

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateKategoriRequest extends FormRequest
+class UpdateMenuRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,22 @@ class UpdateKategoriRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_kategori' => 'required'
+            'nama_menu' => 'required',
+            'harga' => 'required',
+            'gambar' => 'required',
+            'keterangan' => 'required',
+            'jenis_id' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'nama_kategori.required' => 'Data Nama Kategori belum diisi!'
+            'nama_menu.required' => 'Data Nama Menus belum diisi!',
+            'harga.required' => 'Data Harga belum diisi!',
+            'gambar.required' => 'Data Gambar belum diisi!',
+            'keterangan.required' => 'Data Keterangan belum diisi!',
+            'jenis_id.required' => 'Data Jenis Id belum diisi!'
         ];
     }
 }
