@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jenis;
-use App\Http\Requests\StoreJenisRequest;
-use App\Http\Requests\UpdateJenisRequest;
+use App\Models\Kategori;
+use App\Http\Requests\StoreKategoriRequest;
+use App\Http\Requests\UpdateKategoriRequest;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use PDOException;
 
-class JenisController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data['jenis'] = Jenis::orderBy('created_at', 'ASC')->get();
+        $data['kategori'] = Kategori::orderBy('created_at', 'ASC')->get();
 
-        return view('jenis.index')->with($data);
+        return view('kategori.index')->with($data);
     }
 
     /**
@@ -33,16 +33,16 @@ class JenisController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJenisRequest $request)
+    public function store(StoreKategoriRequest $request)
     {
         try {
             DB::beginTransaction(); #Mulai Transaksi
-            Jenis::create($request->all()); #Query Input Ke Table
+            Kategori::create($request->all()); #Query Input Ke Table
 
             DB::commit(); #Menyimpan Data Ke Database
 
             // Untuk Merefresh ke halaman itu kembali untuk melihat hasil
-            return redirect('jenis')->with('success', 'Data berhasil ditambahkan!');
+            return redirect('kategori')->with('success', 'Data berhasil ditambahkan!');
         } catch (QueryException | Exception | PDOException $error) {
             DB::rollback(); #Undo Perubahan Query/Table
             // $this->failResponse($error->getMessage(), $error->getCode());
@@ -52,7 +52,7 @@ class JenisController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Jenis $jenis)
+    public function show(Kategori $kategori)
     {
         //
     }
@@ -60,7 +60,7 @@ class JenisController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jenis $jenis)
+    public function edit(Kategori $kategori)
     {
         //
     }
@@ -68,20 +68,20 @@ class JenisController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJenisRequest $request, Jenis $jeni)
+    public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
-        $jeni->update($request->all());
+        $kategori->update($request->all());
 
-        return redirect('jenis')->with('success', 'Update Data Berhasil!');
+        return redirect('kategori')->with('success', 'Update Data Berhasil!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jenis $jeni)
+    public function destroy(Kategori $kategori)
     {
-        $jeni->delete();
+        $kategori->delete();
 
-        return redirect('jenis')->with('success', 'Delete Data Berhasil!');
+        return redirect('kategori')->with('success', 'Delete Data Berhasil!');
     }
 }

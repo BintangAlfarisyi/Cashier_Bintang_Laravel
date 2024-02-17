@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Jenis</h1>
+        <h1>Kategori</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/jenis">Jenis</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/kategori">Kategori</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -37,10 +37,10 @@
                 </div>
                 @endif
 
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormJenis">
-                    <i class="bi bi-plus"></i> Tambah Jenis
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormKategori">
+                    <i class="bi bi-plus"></i> Tambah Katgori
                 </button>
-                @include('jenis.data')
+                @include('kategori.data')
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@
 </main><!-- End #main -->
 @endsection
 
-@include('jenis.form')
+@include('kategori.form')
 
 @push('script')
 <script>
@@ -82,32 +82,30 @@
 
 
         // Update or input
-        $('#modalFormJenis').on('show.bs.modal', function(e) {
+        $('#modalFormKategori').on('show.bs.modal', function(e) {
             const btn = $(e.relatedTarget)
             const modal = $(this)
             const mode = btn.data('mode')
             const id = btn.data('id')
-            const nama = btn.data('nama_jenis')
-            const kategori_id = btn.data('kategori_id')
+            const nama = btn.data('nama_kategori')
 
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_jenis').val(nama)
-                modal.find('#kategori_id').val(kategori_id)
+                modal.find('#nama_kategori').val(nama)
                 modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('jenis') }}/${id}`)
+                modal.find('form').attr('action', `{{ url('kategori') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_jenis').val('')
+                modal.find('#nama_kategori').val('')
                 modal.find('#kategori_id').val('')
                 modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("jenis") }}')
+                modal.find('form').attr('action', '{{ url("kategori") }}')
             }
         })
         
-        $('#modalFormJenis').on('shown.bs.modal', function() {
-            $('#nama_jenis').delay(1000).focus().select();
+        $('#modalFormKategori').on('shown.bs.modal', function() {
+            $('#nama_kategori').delay(1000).focus().select();
         })
     })
 </script>

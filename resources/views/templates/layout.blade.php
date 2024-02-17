@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Favicons -->
-    <link href="{{ asset('admin') }}/img/favicon.png" rel="icon">
-    <link href="{{ asset('admin') }}/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ asset('assets/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('assets/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -50,8 +50,8 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
-                <img src="{{ asset('admin') }}/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <img src="{{ asset('assets') }}/CB.png" alt="" style="width: 40px;">
+                <span class="d-none d-lg-block">Cashier Bintang</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -297,8 +297,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Data Tables</span>
+                        <a href="/kategori">
+                            <i class="bi bi-circle"></i><span>Kategori</span>
                         </a>
                     </li>
                 </ul>
