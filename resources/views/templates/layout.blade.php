@@ -314,6 +314,11 @@
                             <i class="bi bi-circle"></i><span>Pelanggan</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/transaksi">
+                            <i class="bi bi-circle"></i><span>Transaksi</span>
+                        </a>
+                    </li>
                 </ul>
             </li><!-- End Tables Nav -->
 

@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Pelanggan</h1>
+        <h1>Menu</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/pelanggan">Pelanggan</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/menu">Menu</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -33,14 +33,14 @@
                         <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
 
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormPelanggan">
-                    <i class="bi bi-plus"></i> Tambah Pelanggan
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormTransaksi">
+                    <i class="bi bi-plus"></i> Tambah Transaksi
                 </button>
-                @include('pelanggan.data')
+                @include('transaksi.data')
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@
 </main><!-- End #main -->
 @endsection
 
-@include('pelanggan.form')
+@include('transaksi.form')
 
 @push('script')
 <script>
@@ -82,38 +82,38 @@
 
 
         // Update or input
-        $('#modalFormPelanggan').on('show.bs.modal', function(e) {
+        $('#modalFormTransaksi').on('show.bs.modal', function(e) {
             const btn = $(e.relatedTarget)
             const modal = $(this)
             const mode = btn.data('mode')
             const id = btn.data('id')
-            const nama = btn.data('nama_pelanggan')
-            const email = btn.data('email')
-            const telpon = btn.data('telpon')
-            const alamat = btn.data('alamat')
+            const tanggal = btn.data('tanggal')
+            const total_harga = btn.data('total_harga')
+            const metode_pembayaran = btn.data('metode_pembayaran')
+            const keterangan = btn.data('keterangan')
 
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_pelanggan').val(nama)
-                modal.find('#email').val(email)
-                modal.find('#telpon').val(telpon)
-                modal.find('#alamat').val(alamat)
+                modal.find('#tanggal').val(tanggal)
+                modal.find('#total_harga').val(total_harga)
+                modal.find('#metode_pembayaran').val(metode_pembayaran)
+                modal.find('#keterangan').val(keterangan)
                 modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('pelanggan') }}/${id}`)
+                modal.find('form').attr('action', `{{ url('transaksi') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_pelanggan').val('')
-                modal.find('#email').val('')
-                modal.find('#telpon').val('')
-                modal.find('#alamat').val('')
+                modal.find('#tanggal').val('')
+                modal.find('#total_harga').val('')
+                modal.find('#metode_pembayaran').val('')
+                modal.find('#keterangan').val('')
                 modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("pelanggan") }}')
+                modal.find('form').attr('action', '{{ url("transaksi") }}')
             }
         })
         
-        $('#modalFormPelanggan').on('shown.bs.modal', function() {
-            $('#nama_pelanggan').delay(1000).focus().select();
+        $('#modalFormTransaksi').on('shown.bs.modal', function() {
+            $('#tanggal').delay(1000).focus().select();
         })
     })
 </script>
