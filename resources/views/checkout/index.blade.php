@@ -5,114 +5,176 @@
 
 @section('content')
 <main id="main" class="main">
-
     <div class="pagetitle">
-        <h1>Jenis</h1>
+        <h1>Checkout</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/jenis">Jenis</a></li>
+                <li class="breadcrumb-item">Pemesanan</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/checkout">Checkout</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
-    <div class="container">
-        {{-- <div class="item header">Header</div> --}}
-        <div class="item">
-            <ul class="menu-container">
+    <div class="container d-flex justify-content-between p-3">
+        <div class="item" style="flex-basis: 70%;">
+            <div class="accordion" id="menuAccordion">
                 @foreach ($jenis as $j)
-                <li>
-                    <h3>{{ $j->nama_jenis }}</h3>
-                    <ul class="menu-item" style="cursor: pointer;">
-                        @foreach ($j->menu as $menu)
-                        <li data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}">
-                            {{ $menu->nama_menu }}
-                        </li>
-                        @endforeach
-                    </ul>
-                </li>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{$j->id}}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$j->id}}" aria-expanded="true" aria-controls="collapse{{$j->id}}">
+                            {{ $j->nama_jenis }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{$j->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$j->id}}" data-bs-parent="#menuAccordion">
+                        <div class="accordion-body">
+                            <ul class="menu-item list-group list-group-flush">
+                                @foreach ($j->menu as $menu)
+                                <li class="list-group-item" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}">
+                                    {{ $menu->nama_menu }}
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
+            </div>
+        </div>
+        <div class="item content p-4" style="flex-basis: 30%;">
+            <h3>Order</h3>
+            <ul class="ordered-list list-group">
+
             </ul>
+            <div>
+                <button id="btn-bayar" class="btn btn-primary">Bayar</button>
+            </div>
+            <div class="mt-3">
+                Total Bayar : <h2 id="total">0</h2>
+            </div>
         </div>
-
     </div>
-    </div>
-    <div class="item content">
-        <h3>Order</h3>
-        <ul class="ordered-list">
-
-        </ul>
-        Total Bayar : <h2 id="total"> 0</h2>
-        <div>
-            <button id="btn-bayar">Bayar</button>
-        </div>
-
-
 
 </main><!-- End #main -->
 @endsection
 
-@include('jenis.form')
-
 @push('script')
 <script>
-    $('.alert-success').fadeTo(2000, 500).slideUp(500, function() {
-        $('.alert-success').slideUp(500)
-    })
+    // Penutup Jenis List
+    document.addEventListener('DOMContentLoaded', function() {
+        var accordionItems = document.querySelectorAll('.accordion-item');
 
-    $('.alert-danger').fadeTo(2000, 500).slideUp(500, function() {
-        $('.alert-danger').slideUp(500)
-    })
+        accordionItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                var accordionCollapse = this.querySelector('.accordion-collapse');
+                var isCollapsed = accordionCollapse.classList.contains('show');
+
+                // Close all other accordions
+                var accordions = document.querySelectorAll('.accordion-collapse.show');
+                accordions.forEach(function(accordion) {
+                    if (accordion !== accordionCollapse) {
+                        accordion.classList.remove('show');
+                    }
+                });
+
+                // Toggle collapsed state
+                if (isCollapsed) {
+                    accordionCollapse.classList.remove('show');
+                } else {
+                    accordionCollapse.classList.add('show');
+                }
+            });
+        });
+    });
 
     $(function() {
-        // dialog hapus data
-        $('.btn-delete').on('click', function(e) {
-            const nama = $(this).closest('tr').find('td:eq(1)').text();
-            // console.log('nama')
-            Swal.fire({
-                icon: 'error',
-                title: 'Hapus Data',
-                html: `Apakah data <b>${nama}</b> akan di hapus?`,
-                confirmButtonText: 'Ya',
-                denyButtonText: 'Tidak',
-                'showDenyButton': true,
-                focusConfirm: false
-            }).then((result) => {
-                if (result.isConfirmed)
-                    $(e.target).closest('form').submit()
-                else swal.close()
-            })
-        })
+        // Inisialisasi
+        const orderedList = [];
+        let total = 0;
 
+        const sum = () => {
+            return orderedList.reduce((accumulator, object) => {
+                return accumulator + (object.harga * object.qty);
+            }, 0);
+        };
 
-        // Update or input
-        $('#modalFormJenis').on('show.bs.modal', function(e) {
-            const btn = $(e.relatedTarget)
-            const modal = $(this)
-            const mode = btn.data('mode')
-            const id = btn.data('id')
-            const nama = btn.data('nama_jenis')
-            const kategori_id = btn.data('kategori_id')
+        const changeQty = (el, inc) => {
+            // Ubah di array
+            const id = $(el).closest('li')[0].dataset.id;
+            const index = orderedList.findIndex(list => list.id == id);
+            orderedList[index].qty += orderedList[index].qty == 1 && inc == -1 ? 0 : inc;
 
-            // Membedakan Input Atau Edit
-            if (mode === 'edit') {
-                modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_jenis').val(nama)
-                modal.find('#kategori_id').val(kategori_id)
-                modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('jenis') }}/${id}`)
-            } else {
-                modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_jenis').val('')
-                modal.find('#kategori_id').val('')
-                modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("jenis") }}')
+            // Ubah qty dan ubah subtotal
+            const txt_subtotal = $(el).closest('li').find('.subtotal')[0];
+            const txt_qty = $(el).closest('li').find('.qty-item')[0];
+            txt_qty.value = parseInt(txt_qty.value) == 1 && inc == -1 ? 1 : parseInt(txt_qty.value) + inc;
+            txt_subtotal.innerHTML = orderedList[index].harga * orderedList[index].qty;
+
+            // Ubah jumlah total
+            $('#total').html(sum());
+        };
+
+        // Events
+        $('.ordered-list').on('click', '.btn-dec', function() {
+            changeQty(this, -1);
+        });
+
+        $('.ordered-list').on('click', '.btn-inc', function() {
+            changeQty(this, 1); // Perbaiki parameter di sini
+        });
+
+        $('.ordered-list').on('click', '.remove-item', function() {
+            const item = $(this).closest('li')[0];
+            let index = orderedList.findIndex(list => list.id == parseInt(item.dataset.id));
+            orderedList.splice(index, 1);
+            $(this).closest('li').remove(); // Perbaiki pemanggilan remove
+            $('#total').html(sum());
+        });
+
+        $('#btn-bayar').on('click', function() {
+            $.ajax({
+                url: "{{ route('checkout.store') }}",
+                method: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    orderedList: orderedList,
+                    total: total
+                },
+                success: function(data) { // Perbaiki pengejaan di sini
+                    console.log(data);
+                }
+            });
+        });
+
+        $(".menu-item li").click(function() {
+            const menu_clicked = $(this).text();
+            const data = $(this)[0].dataset;
+            const harga = parseFloat(data.harga);
+            const id = parseInt(data.id);
+
+            if (orderedList.every(list => list.id !== id)) {
+                let dataN = {
+                    'id': id,
+                    'menu': menu_clicked,
+                    'harga': harga,
+                    'qty': 1
+                };
+                orderedList.push(dataN);
+                let listOrder = `
+                <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${id}">
+                    <h5>${menu_clicked}</h5>
+                    <div class="input-group">
+                        <span class="input-group-text">Sub Total : Rp. ${harga}</span>
+                        <button class='btn btn-danger remove-item'>Hapus</button>
+                        <button class="btn btn-secondary btn-dec">-</button>
+                        <input class="form-control qty-item" type="number" value="1" style="width:60px" readonly>
+                        <button class="btn btn-secondary btn-inc">+</button>
+                        <h2><span class="subtotal">${harga * 1}</span></h2>
+                    </div>
+                </li>`;
+                $('.ordered-list').append(listOrder);
             }
-        })
-
-        $('#modalFormJenis').on('shown.bs.modal', function() {
-            $('#nama_jenis').delay(1000).focus().select();
-        })
-    })
+            $('#total').html(sum());
+        });
+    });
 </script>
 @endpush

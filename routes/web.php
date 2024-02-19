@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DetailTransaksiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisController;
@@ -31,4 +32,5 @@ Route::resource('/pelanggan', PelangganController::class);
 Route::resource('/transaksi', TransaksiController::class);
 Route::resource('/detail_transaksi', DetailTransaksiController::class);
 Route::resource('/meja', MejaController::class);
+Route::resource('/checkout', CheckoutController::class);
 // Route::get('/dashboard', [HomeController::class, 'index']);
