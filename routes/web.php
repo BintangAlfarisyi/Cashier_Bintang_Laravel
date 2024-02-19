@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailTransaksiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
@@ -27,4 +28,5 @@ Route::resource('/menu', MenuController::class);
 Route::resource('/stok', StokController::class);
 Route::resource('/pelanggan', PelangganController::class);
 Route::resource('/transaksi', TransaksiController::class);
+Route::resource('/detail_transaksi', DetailTransaksiController::class);
 // Route::get('/dashboard', [HomeController::class, 'index']);

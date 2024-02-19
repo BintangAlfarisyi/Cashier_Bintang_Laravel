@@ -319,6 +319,11 @@
                             <i class="bi bi-circle"></i><span>Transaksi</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/detail_transaksi">
+                            <i class="bi bi-circle"></i><span>Detail Transaksi</span>
+                        </a>
+                    </li>
                 </ul>
             </li><!-- End Tables Nav -->
 
