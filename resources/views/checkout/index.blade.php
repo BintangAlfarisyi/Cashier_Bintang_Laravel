@@ -7,48 +7,52 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Stok</h1>
+        <h1>Jenis</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/stok">Stok</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/jenis">Jenis</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
-    <section class="section dashboard">
-        <div class="row">
-            <div class="card-body">
-                @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-
-                @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+    <div class="container">
+        {{-- <div class="item header">Header</div> --}}
+        <div class="item">
+            <ul class="menu-container">
+                @foreach ($jenis as $j)
+                <li>
+                    <h3>{{ $j->nama_jenis }}</h3>
+                    <ul class="menu-item" style="cursor: pointer;">
+                        @foreach ($j->menu as $menu)
+                        <li data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}">
+                            {{ $menu->nama_menu }}
+                        </li>
                         @endforeach
                     </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormStok">
-                    <i class="bi bi-plus"></i> Tambah Stok
-                </button>
-                @include('stok.data')
-            </div>
+                </li>
+                @endforeach
+            </ul>
         </div>
-    </section>
+
+    </div>
+    </div>
+    <div class="item content">
+        <h3>Order</h3>
+        <ul class="ordered-list">
+
+        </ul>
+        Total Bayar : <h2 id="total"> 0</h2>
+        <div>
+            <button id="btn-bayar">Bayar</button>
+        </div>
+
+
 
 </main><!-- End #main -->
 @endsection
 
-@include('stok.form')
+@include('jenis.form')
 
 @push('script')
 <script>
@@ -82,32 +86,32 @@
 
 
         // Update or input
-        $('#modalFormStok').on('show.bs.modal', function(e) {
+        $('#modalFormJenis').on('show.bs.modal', function(e) {
             const btn = $(e.relatedTarget)
             const modal = $(this)
             const mode = btn.data('mode')
             const id = btn.data('id')
-            const menu_id = btn.data('menu_id')
-            const jumlah = btn.data('jumlah')
+            const nama = btn.data('nama_jenis')
+            const kategori_id = btn.data('kategori_id')
 
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#menu_id').val(menu_id)
-                modal.find('#jumlah').val(jumlah)
+                modal.find('#nama_jenis').val(nama)
+                modal.find('#kategori_id').val(kategori_id)
                 modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('stok') }}/${id}`)
+                modal.find('form').attr('action', `{{ url('jenis') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#menu_id').val('')
-                modal.find('#jumlah').val('')
+                modal.find('#nama_jenis').val('')
+                modal.find('#kategori_id').val('')
                 modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("stok") }}')
+                modal.find('form').attr('action', '{{ url("jenis") }}')
             }
         })
-        
-        $('#modalFormStok').on('shown.bs.modal', function() {
-            $('#menu_id').delay(1000).focus().select();
+
+        $('#modalFormJenis').on('shown.bs.modal', function() {
+            $('#nama_jenis').delay(1000).focus().select();
         })
     })
 </script>

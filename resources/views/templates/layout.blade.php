@@ -324,6 +324,11 @@
                             <i class="bi bi-circle"></i><span>Detail Transaksi</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/meja">
+                            <i class="bi bi-circle"></i><span>Meja</span>
+                        </a>
+                    </li>
                 </ul>
             </li><!-- End Tables Nav -->
 

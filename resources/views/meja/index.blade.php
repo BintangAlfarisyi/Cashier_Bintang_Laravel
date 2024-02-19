@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Menu</h1>
+        <h1>Meja</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/menu">Menu</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/meja">Meja</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -37,10 +37,10 @@
                 </div>
                 @endif
 
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMenu">
-                    <i class="bi bi-plus"></i> Tambah Menu
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMeja">
+                    <i class="bi bi-plus"></i> Tambah Meja
                 </button>
-                @include('menu.data')
+                @include('meja.data')
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@
 </main><!-- End #main -->
 @endsection
 
-@include('menu.form')
+@include('meja.form')
 
 @push('script')
 <script>
@@ -82,41 +82,35 @@
 
 
         // Update or input
-        $('#modalFormMenu').on('show.bs.modal', function(e) {
+        $('#modalFormMeja').on('show.bs.modal', function(e) {
             const btn = $(e.relatedTarget)
             const modal = $(this)
             const mode = btn.data('mode')
             const id = btn.data('id')
-            const nama = btn.data('nama_menu')
-            const harga = btn.data('harga')
-            const gambar = btn.data('gambar')
-            const keterangan = btn.data('keterangan')
-            const jenis_id = btn.data('jenis_id')
+            const no_meja = btn.data('no_meja')
+            const kapasitas = btn.data('kapasitas')
+            const status = btn.data('status')
 
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_menu').val(nama)
-                modal.find('#harga').val(harga)
-                modal.find('#gambar').val(gambar)
-                modal.find('#keterangan').val(keterangan)
-                modal.find('#jenis_id').val(jenis_id)
+                modal.find('#no_meja').val(no_meja)
+                modal.find('#kapasitas').val(kapasitas)
+                modal.find('#status').val(status)
                 modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('menu') }}/${id}`)
+                modal.find('form').attr('action', `{{ url('meja') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_menu').val('')
-                modal.find('#harga').val('')
-                modal.find('#gambar').val('')
-                modal.find('#keterangan').val('')
-                modal.find('#jenis_id').val('')
+                modal.find('#no_meja').val('')
+                modal.find('#kapasitas').val('')
+                modal.find('#status').val('')
                 modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("menu") }}')
+                modal.find('form').attr('action', '{{ url("meja") }}')
             }
         })
         
-        $('#modalFormMenu').on('shown.bs.modal', function() {
-            $('#nama_menu').delay(1000).focus().select();
+        $('#modalFormMeja').on('shown.bs.modal', function() {
+            $('#no_meja').delay(1000).focus().select();
         })
     })
 </script>
