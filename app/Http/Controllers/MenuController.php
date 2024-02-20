@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
+use App\Models\Jenis;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -17,9 +18,10 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $data['menu'] = Menu::orderBy('created_at', 'ASC')->get();
+        $menu = Menu::with('jenis')->get();
+        $jenis = Jenis::all();
 
-        return view('menu.index')->with($data);
+        return view('menu.index', compact('jenis', 'menu'));
     }
 
     /**

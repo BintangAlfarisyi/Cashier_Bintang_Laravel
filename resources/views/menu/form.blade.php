@@ -29,10 +29,10 @@
                         <label for="jenis_id" class="form-label">Jenis</label>
                         <div class="input-group">
                             <select class="form-select" id="jenis_id" name="jenis_id">
-                                <option selected disabled>Pilih Jenis</option>
-                                <option value="1">Makanan</option>
-                                <option value="2">Minuman</option>
-                                <option value="3">Snack</option>
+                                <!-- <option selected disabled>Pilih Jenis</option> -->
+                                @foreach($jenis as $j)
+                                <option value="{{ $j->id }}">{{ $j->nama_jenis }}</option>
+                                @endforeach
                             </select>
                             <label class="input-group-text" for="jenis_id"><i class="fas fa-caret-down"></i></label>
                         </div>

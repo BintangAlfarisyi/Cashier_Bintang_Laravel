@@ -59,33 +59,6 @@
 
 @push('script')
 <script>
-    // Penutup Jenis List
-    document.addEventListener('DOMContentLoaded', function() {
-        var accordionItems = document.querySelectorAll('.accordion-item');
-
-        accordionItems.forEach(function(item) {
-            item.addEventListener('click', function() {
-                var accordionCollapse = this.querySelector('.accordion-collapse');
-                var isCollapsed = accordionCollapse.classList.contains('show');
-
-                // Close all other accordions
-                var accordions = document.querySelectorAll('.accordion-collapse.show');
-                accordions.forEach(function(accordion) {
-                    if (accordion !== accordionCollapse) {
-                        accordion.classList.remove('show');
-                    }
-                });
-
-                // Toggle collapsed state
-                if (isCollapsed) {
-                    accordionCollapse.classList.remove('show');
-                } else {
-                    accordionCollapse.classList.add('show');
-                }
-            });
-        });
-    });
-
     $(function() {
         // Inisialisasi
         const orderedList = [];

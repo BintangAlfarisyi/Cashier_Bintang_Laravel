@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
-use App\Http\Requests\StoreTransaksiRequest;
-use App\Http\Requests\UpdateTransaksiRequest;
+use App\Http\Requests\TransaksiRequest;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +32,7 @@ class TransaksiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTransaksiRequest $request)
+    public function store(TransaksiRequest $request)
     {
         try {
             DB::beginTransaction(); #Mulai Transaksi
@@ -68,7 +67,7 @@ class TransaksiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTransaksiRequest $request, Transaksi $transaksi)
+    public function update(TransaksiRequest $request, Transaksi $transaksi)
     {
         $transaksi->update($request->all());
 
