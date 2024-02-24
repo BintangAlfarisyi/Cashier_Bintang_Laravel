@@ -7,7 +7,7 @@
                 <th>Harga</th>
                 <th>Gambar</th>
                 <th>Keterangan</th>
-                <th>Jenis Id</th>
+                <th>Jenis</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
                 <td>{{ $m->harga }}</td>
                 <td>{{ $m->gambar }}</td>
                 <td>{{ $m->keterangan }}</td>
-                <td>{{ $m->jenis_id }}</td>
+                <td>{{ $m->jenis->nama_jenis }}</td>
                 <td>
                     <button type="button" class="btn btn-success btn-size" data-bs-toggle="modal" data-bs-target="#modalFormMenu" data-mode="edit" data-id="{{ $m->id }}" data-nama_menu="{{ $m->nama_menu }}" data-harga="{{ $m->harga }}" data-gambar="{{ $m->gambar }}" data-keterangan="{{ $m->keterangan }}" data-jenis_id="{{ $m->jenis_id }}">
                         <i class="bi bi-pencil-square"></i>

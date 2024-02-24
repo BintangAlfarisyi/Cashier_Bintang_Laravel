@@ -20,7 +20,7 @@ class PemesananController extends Controller
     {
         $data['jenis'] = Jenis::with(['menu'])->get();
 
-        return view('checkout.index')->with($data);
+        return view('pemesanan.index')->with($data);
     }
 
     /**
@@ -36,18 +36,9 @@ class PemesananController extends Controller
      */
     public function store(StorePemesananRequest $request)
     {
-        try {
-            DB::beginTransaction(); #Mulai Transaksi
-            Pemesanan::create($request->all()); #Query Input Ke Table
+        $data['jenis'] = Jenis::with(['menu'])->get();
 
-            DB::commit(); #Menyimpan Data Ke Database
-
-            // Untuk Merefresh ke halaman itu kembali untuk melihat hasil
-            return redirect('pemesanan')->with('success', 'Data berhasil ditambahkan!');
-        } catch (QueryException | Exception | PDOException $error) {
-            DB::rollback(); #Undo Perubahan Query/Table
-            // $this->failResponse($error->getMessage(), $error->getCode());
-        }
+        return view('pemesanan.index')->with($data);
     }
 
     /**

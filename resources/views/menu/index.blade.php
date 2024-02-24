@@ -19,15 +19,19 @@
     <section class="section dashboard">
         <div class="row">
             <div class="card-body">
+
+                <!-- Alert Success -->
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
+                    <i class="bi bi-check-circle"></i> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
 
+                <!-- Alert Ketika ada kesalahan -->
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle"></i> Terdapat beberapa masalah:
                     <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -114,10 +118,30 @@
                 modal.find('form').attr('action', '{{ url("menu") }}')
             }
         })
-        
+
         $('#modalFormMenu').on('shown.bs.modal', function() {
             $('#nama_menu').delay(1000).focus().select();
         })
     })
+
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var keterangan = document.getElementById('keterangan').value;
+        fetch('/process_payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    keterangan: keterangan
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Handle response from server
+            })
+            .catch(error => console.error('Error:', error));
+    });
 </script>
 @endpush

@@ -19,15 +19,19 @@
     <section class="section dashboard">
         <div class="row">
             <div class="card-body">
+                
+                <!-- Alert Success -->
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
+                    <i class="bi bi-check-circle"></i> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
 
+                <!-- Alert Ketika ada kesalahan -->
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle"></i> Terdapat beberapa masalah:
                     <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -105,7 +109,7 @@
                 modal.find('form').attr('action', '{{ url("jenis") }}')
             }
         })
-        
+
         $('#modalFormJenis').on('shown.bs.modal', function() {
             $('#nama_jenis').delay(1000).focus().select();
         })

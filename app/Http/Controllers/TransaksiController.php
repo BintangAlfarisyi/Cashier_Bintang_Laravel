@@ -35,16 +35,26 @@ class TransaksiController extends Controller
     public function store(TransaksiRequest $request)
     {
         try {
-            DB::beginTransaction(); #Mulai Transaksi
-            Transaksi::create($request->all()); #Query Input Ke Table
+            DB::beginTransaction();
 
-            DB::commit(); #Menyimpan Data Ke Database
+            $last_id = Transaksi::where('tanggal', date('Y-m-d'))->orderBy('id', 'desc')->select('id')->first();
+            $next_id_suffix = $last_id ? (int)substr($last_id->id, 10) + 1 : 1;
 
-            // Untuk Merefresh ke halaman itu kembali untuk melihat hasil
-            return redirect('transaksi')->with('success', 'Data berhasil ditambahkan!');
-        } catch (QueryException | Exception | PDOException $error) {
-            DB::rollback(); #Undo Perubahan Query/Table
-            // $this->failResponse($error->getMessage(), $error->getCode());
+            $noTrans = date('Ymd') . sprintf('%03d', $next_id_suffix);
+
+            $insertTransaksi = Transaksi::create([
+                'id' => $noTrans,
+                'tanggal' => date('Y-m-d'),
+                'total_harga' => $request->total,
+                'metode_pembayaran' => 'cash', // Sesuaikan dengan logika bisnis Anda
+                'keterangan' => ''
+            ]);
+
+            DB::commit();
+            return $insertTransaksi;
+        } catch (QueryException | Exception | PDOException $e) {
+            DB::rollBack();
+            return $e->getMessage(); // Mengembalikan pesan kesalahan yang lebih informatif
         }
     }
 
@@ -53,7 +63,6 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-        
     }
 
     /**
@@ -61,7 +70,6 @@ class TransaksiController extends Controller
      */
     public function edit(Transaksi $transaksi)
     {
-        
     }
 
     /**

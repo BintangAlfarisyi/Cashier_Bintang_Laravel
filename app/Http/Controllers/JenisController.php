@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jenis;
 use App\Http\Requests\StoreJenisRequest;
 use App\Http\Requests\UpdateJenisRequest;
+use App\Models\Menu;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -80,8 +81,46 @@ class JenisController extends Controller
      */
     public function destroy(Jenis $jeni)
     {
-        $jeni->delete();
+        // $jenis = Jenis::find($jenis_id);
 
-        return redirect('jenis')->with('success', 'Delete Data Berhasil!');
+        // if ($jenis) {
+        //     // Temukan semua menu yang terkait dengan jenis yang akan dihapus
+        //     $menus = Menu::where('jenis_id', $jenis_id)->get();
+
+        //     // Hapus semua menu yang terkait
+        //     foreach ($menus as $menu) {
+        //         $menu->delete();
+        //     }
+
+        //     // Hapus jenis itu sendiri
+        //     $jenis->delete();
+
+        //     return redirect('jenis')->with('success', 'Data berhasil dihapus beserta semua menu yang terkait.');
+        // } else {
+        //     return redirect('jenis')->with('error', 'Jenis tidak ditemukan.');
+        // }
+    }
+
+    public function hapusJenis($jenis_id)
+    {
+        // Cari jenis berdasarkan ID
+        $jeni = Jenis::find($jenis_id);
+
+        if ($jeni) {
+            // Temukan semua menu yang terkait dengan jenis yang akan dihapus
+            $menus = Menu::where('jenis_id', $jenis_id)->get();
+
+            // Hapus semua menu yang terkait
+            foreach ($menus as $menu) {
+                $menu->delete();
+            }
+
+            // Hapus jenis itu sendiri
+            $jeni->delete();
+
+            return redirect('jenis')->with('success', 'Data berhasil dihapus beserta semua menu yang terkait.');
+        } else {
+            return redirect('jenis')->with('error', 'Jenis tidak ditemukan.');
+        }
     }
 }

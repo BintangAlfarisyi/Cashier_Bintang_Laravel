@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::resource('/jenis', JenisController::class);
+Route::delete('/jenis/hapus/{jenis_id}', [JenisController::class, 'hapusJenis'])->name('jenis.hapus');
+
+
 Route::resource('/kategori', KategoriController::class);
 Route::resource('/menu', MenuController::class);
 Route::resource('/stok', StokController::class);
@@ -34,4 +37,4 @@ Route::resource('/transaksi', TransaksiController::class);
 Route::resource('/detail_transaksi', DetailTransaksiController::class);
 Route::resource('/meja', MejaController::class);
 Route::resource('/pemesanan', PemesananController::class);
-Route::resource('/checkout', CheckoutController::class);
+// Route::resource('/checkout', CheckoutController::class);
