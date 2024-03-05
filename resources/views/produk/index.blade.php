@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Jenis</h1>
+        <h1>Produk Titipan</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/jenis">Jenis</a></li>
+                <li class="breadcrumb-item">Pages</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/produk">Produk Titipan</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -40,20 +40,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormJenis">
-                    <i class="bi bi-plus"></i> Tambah Jenis
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormProduk">
+                    <i class="bi bi-plus"></i> Tambah Produk Titipan
                 </button>
-                <a href="{{ route('exportExcelJenis') }}" class="btn btn-success">
-                    <i class="bi bi-table"></i> Export XSLX
-                </a>
-                <a href="{{ route('exportPdfJenis') }}" class="btn btn-danger">
-                    <i class="bi bi-file-pdf"></i> Export PDF
-                </a>
-                <button href="{{ route('bintang') }}" type="button" class="btn btn-warning btn-import"
-                    data-bs-toggle="modal" data-bs-target="#formImport">
-                    <i class="fas fa-file-import"></i> Import
-                </button>
-                @include('jenis.data')
+                @include('produk.data')
             </div>
         </div>
     </section>
@@ -61,7 +52,7 @@
 </main><!-- End #main -->
 @endsection
 
-@include('jenis.form')
+@include('produk.form')
 
 @push('script')
 <script>
@@ -95,32 +86,44 @@
 
 
         // Update or input
-        $('#modalFormJenis').on('show.bs.modal', function(e) {
+        $('#modalFormProduk').on('show.bs.modal', function(e) {
             const btn = $(e.relatedTarget)
             const modal = $(this)
             const mode = btn.data('mode')
             const id = btn.data('id')
-            const nama = btn.data('nama_jenis')
-            const kategori_id = btn.data('kategori_id')
+            const nama_produk = btn.data('nama_produk')
+            const nama_supplier = btn.data('nama_supplier')
+            const harga_beli = btn.data('harga_beli')
+            const harga_jual = btn.data('harga_jual')
+            const stok = btn.data('stok')
+            const keterangan = btn.data('keterangan')
 
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_jenis').val(nama)
-                modal.find('#kategori_id').val(kategori_id)
+                modal.find('#nama_produk').val(nama_produk)
+                modal.find('#nama_supplier').val(nama_supplier)
+                modal.find('#harga_beli').val(harga_beli)
+                modal.find('#harga_jual').val(harga_jual)
+                modal.find('#stok').val(stok)
+                modal.find('#keterangan').val(keterangan)
                 modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('jenis') }}/${id}`)
+                modal.find('form').attr('action', `{{ url('produk') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_jenis').val('')
-                modal.find('#kategori_id').val('')
+                modal.find('#nama_produk').val('')
+                modal.find('#nama_supplier').val('')
+                modal.find('#harga_beli').val('')
+                modal.find('#harga_jual').val('')
+                modal.find('#stok').val('')
+                modal.find('#keterangan').val('')
                 modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("jenis") }}')
+                modal.find('form').attr('action', '{{ url("produk") }}')
             }
         })
-
-        $('#modalFormJenis').on('shown.bs.modal', function() {
-            $('#nama_jenis').delay(1000).focus().select();
+        
+        $('#modalFormProduk').on('shown.bs.modal', function() {
+            $('#nama_produk').delay(1000).focus().select();
         })
     })
 </script>

@@ -9,6 +9,7 @@ use App\Http\Controllers\MejaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +27,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::resource('/jenis', JenisController::class);
-Route::delete('/jenis/hapus/{jenis_id}', [JenisController::class, 'hapusJenis'])->name('jenis.hapus');
-
-
 Route::resource('/kategori', KategoriController::class);
 Route::resource('/menu', MenuController::class);
 Route::resource('/stok', StokController::class);
@@ -37,4 +35,17 @@ Route::resource('/transaksi', TransaksiController::class);
 Route::resource('/detail_transaksi', DetailTransaksiController::class);
 Route::resource('/meja', MejaController::class);
 Route::resource('/pemesanan', PemesananController::class);
+Route::resource('/produk', ProdukController::class);
 // Route::resource('/checkout', CheckoutController::class);
+
+// Export Import
+Route::get('export/menu', [MenuController::class, 'generateexcel'])->name('exportExcelMenu');
+Route::get('generate/menu', [MenuController::class, 'generatepdf'])->name('exportPdfMenu');
+Route::get('export/jenis', [JenisController::class, 'generateexcel'])->name('exportExcelJenis');
+Route::get('generate/jenis', [JenisController::class, 'generatepdf'])->name('exportPdfJenis');
+
+// Import
+Route::post('jenis/import', [JenisController::class, 'importData'])->name('bintang');
+Route::post('menu/import', [MenuController::class, 'importData'])->name('bintang');
+// Nota Faktur
+Route::get('nota/{noFaktur}', [TransaksiController::class, 'faktur']);

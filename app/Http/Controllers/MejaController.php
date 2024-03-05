@@ -50,22 +50,6 @@ class MejaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Meja $meja)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Meja $meja)
-    {
-        
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateMejaRequest $request, Meja $meja)

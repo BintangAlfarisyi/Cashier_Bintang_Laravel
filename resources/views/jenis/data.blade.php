@@ -18,7 +18,7 @@
                     <button type="button" class="btn btn-success btn-size" data-bs-toggle="modal" data-bs-target="#modalFormJenis" data-mode="edit" data-id="{{ $j->id }}" data-nama_jenis="{{ $j->nama_jenis }}" data-kategori_id="{{ $j->kategori_id }}">
                         <i class="bi bi-pencil-square"></i>
                     </button>
-                    <form action="{{ route('jenis.hapus', ['jenis_id' => $j->id]) }}" method="post" class="d-inline">
+                    <form action="{{ route('jenis.destroy', $j->id) }}" method="post" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-danger btn-delete btn-size" data-id="{{ $j->id }}">

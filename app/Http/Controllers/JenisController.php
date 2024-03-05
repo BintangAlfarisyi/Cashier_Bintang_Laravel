@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JenisExport;
 use App\Models\Jenis;
 use App\Http\Requests\StoreJenisRequest;
 use App\Http\Requests\UpdateJenisRequest;
-use App\Models\Menu;
+use App\Imports\JenisImport;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use PDOException;
 
 class JenisController extends Controller
@@ -81,46 +85,52 @@ class JenisController extends Controller
      */
     public function destroy(Jenis $jeni)
     {
-        // $jenis = Jenis::find($jenis_id);
+        $jeni->delete();
 
-        // if ($jenis) {
-        //     // Temukan semua menu yang terkait dengan jenis yang akan dihapus
-        //     $menus = Menu::where('jenis_id', $jenis_id)->get();
-
-        //     // Hapus semua menu yang terkait
-        //     foreach ($menus as $menu) {
-        //         $menu->delete();
-        //     }
-
-        //     // Hapus jenis itu sendiri
-        //     $jenis->delete();
-
-        //     return redirect('jenis')->with('success', 'Data berhasil dihapus beserta semua menu yang terkait.');
-        // } else {
-        //     return redirect('jenis')->with('error', 'Jenis tidak ditemukan.');
-        // }
+        return redirect('jenis')->with('success', 'Delete Data Berhasil!');
     }
 
-    public function hapusJenis($jenis_id)
+    public function generateExcel()
     {
-        // Cari jenis berdasarkan ID
-        $jeni = Jenis::find($jenis_id);
-
-        if ($jeni) {
-            // Temukan semua menu yang terkait dengan jenis yang akan dihapus
-            $menus = Menu::where('jenis_id', $jenis_id)->get();
-
-            // Hapus semua menu yang terkait
-            foreach ($menus as $menu) {
-                $menu->delete();
-            }
-
-            // Hapus jenis itu sendiri
-            $jeni->delete();
-
-            return redirect('jenis')->with('success', 'Data berhasil dihapus beserta semua menu yang terkait.');
-        } else {
-            return redirect('jenis')->with('error', 'Jenis tidak ditemukan.');
-        }
+        $date = date('Y-m-d');
+        return Excel::download(new JenisExport, $date . 'jenis.xlsx');
     }
+
+    public function generatepdf()
+    {
+        $jenis = Jenis::all();
+        $pdf = Pdf::loadView('jenis.data', compact('jenis'));
+        return $pdf->download('jenis.pdf');
+    }
+
+    public function importData(Request $request)
+    {
+
+        Excel::import(new JenisImport, $request->import);
+        return redirect()->back()->with('success', 'Data berhasil di import');
+    }
+
+    // public function hapusJenis($jenis_id)
+    // {
+    //     // Cari jenis berdasarkan ID
+    //     $jeni = Jenis::find($jenis_id);
+
+    //     if ($jeni) {
+    //         // Temukan semua menu yang terkait dengan jenis yang akan dihapus
+    //         $menus = Menu::where('jenis_id', $jenis_id)->get();
+
+    //         // Hapus semua menu yang terkait
+    //         foreach ($menus as $menu) {
+    //             $menu->delete();
+    //         }
+
+    //         // Hapus jenis itu sendiri
+    //         $jeni->delete();
+
+    //         return redirect('jenis')->with('success', 'Data berhasil dihapus beserta semua menu yang terkait.');
+    //     } else {
+    //         return redirect('jenis')->with('error', 'Jenis tidak ditemukan.');
+    //     }
+    // }
+
 }

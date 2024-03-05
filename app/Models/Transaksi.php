@@ -17,4 +17,8 @@ class Transaksi extends Model
     {
         return $this->belongsToMany(Menu::class, 'menu_transaksi', 'transaksi_id', 'menu_id');
     }
+
+    public function detailTransaksi(){
+        return $this->hasMany(DetailTransaksi::class);
+    }
 }

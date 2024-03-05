@@ -11,4 +11,12 @@ class DetailTransaksi extends Model
 
     protected $table = 'detail_transaksi';
     protected $fillable = ['transaksi_id', 'menu_id', 'jumlah', 'sub_total'];
+
+    public function transaksi(){
+        return $this->belongsTo(Transaksi::class,  'transaksi_id');
+    }
+
+    public function menu(){
+        return $this->hasOne(Menu::class, 'id', 'menu_id');
+    }
 }

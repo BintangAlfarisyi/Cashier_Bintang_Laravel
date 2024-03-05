@@ -43,6 +43,16 @@
 
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMenu">
                     <i class="bi bi-plus"></i> Tambah Menu
+                </button>   
+                <a href="{{ route('exportExcelMenu') }}" class="btn btn-success">
+                    <i class="bi bi-table"></i> Export XSLX
+                </a>
+                <a href="{{ route('exportPdfMenu') }}" class="btn btn-danger">
+                    <i class="bi bi-file-pdf"></i> Export PDF
+                </a>
+                <button href="{{ route('bintang') }}" type="button" class="btn btn-warning btn-import"
+                    data-bs-toggle="modal" data-bs-target="#formImport">
+                    <i class="fas fa-file-import"></i> Import
                 </button>
                 @include('menu.data')
             </div>

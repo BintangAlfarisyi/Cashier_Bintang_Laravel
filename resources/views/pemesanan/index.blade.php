@@ -3,52 +3,53 @@
 @section('content')
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Checkout</h1>
+        <h1>Pemesanan</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Pemesanan</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/pemesanan">Checkout</a></li>
+                <li class="breadcrumb-item">Pages</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/checkout">Pemesanan</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <div class="container d-flex justify-content-between p-3">
         <div class="item" style="flex-basis: 60%;">
-            <!-- Tombol All untuk menampilkan semua menu -->
-            <button class="btn btn-primary mb-3" onclick="showAll()">All</button>
-
-            <!-- Tombol untuk setiap jenis -->
-            @foreach ($jenis as $j)
-            <button class="btn btn-secondary mb-3" onclick="showMenu('{{ $j->id }}')">{{ $j->nama_jenis }}</button>
-            @endforeach
-
-            <!-- Daftar menu -->
-            <div id="menuItems" class="row">
+            <div class="accordion" id="menuAccordion">
                 @foreach ($jenis as $j)
-                @foreach ($j->menu as $menu)
-                <div class="col-md-4 mb-3" id="menu_{{ $j->id }}">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $menu->nama_menu }}</h5>
-                            <button class="btn btn-primary" onclick="addToOrder('{{ $menu->id }}', '{{ $menu->nama_menu }}', '{{ $menu->harga }}')">Add to Order</button>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{$j->id}}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$j->id}}" aria-expanded="true" aria-controls="collapse{{$j->id}}">
+                            {{ $j->nama_jenis }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{$j->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$j->id}}" data-bs-parent="#menuAccordion">
+                        <div class="accordion-body">
+                            <ul class="menu-item list-group list-group-flush">
+                                @foreach ($j->menu as $menu)
+                                <li class="list-group-item d-flex" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}">
+                                    {{ $menu->nama_menu }}
+                                </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
                 @endforeach
-                @endforeach
             </div>
         </div>
         <div class="item content p-4" style="flex-basis: 35%; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
-            <h3 style="margin-bottom: 20px;">Order</h3>
+            <div class="title d-flex justify-content-between">
+                <h3>Order</h3>
+                <button class="btn btn-danger justify-content-center align-items-center p-0 mt-1 btn-remove-all" style="border-radius: 50%; width: 25px; height: 25px;"><i class="bi bi-x-circle h5"></i></button>
+            </div>
             <ul class="ordered-list list-group" style="padding-left: 20px;">
 
             </ul>
             <div style="margin-top: 20px;">
                 <button id="btn-bayar" class="btn btn-primary">Bayar</button>
             </div>
-            <div class="mt-3 d-flex">
-                <h3>Total Bayar : </h3>
-                <h3 id="total" style="display: inline-block; margin-left: 10px;">Rp. 0</h3>
+            <div class="mt-3">
+                Total Bayar : <h2 id="total" style="display: inline-block; margin-left: 10px;">Rp.0</h2>
             </div>
         </div>
     </div>
@@ -57,151 +58,161 @@
 
 @push('script')
 <script>
-    function showAll() {
-        $('.row > div').removeClass('d-none');
-    }
+    $(function() {
+        // Inisialisasi
+        const orderedList = [];
 
-    function showMenu(jenisId) {
-        // Sembunyikan semua menu terlebih dahulu
-        $('.row > div').addClass('d-none');
+        const sum = () => {
+            return orderedList.reduce((accumulator, object) => {
+                return accumulator + (object.harga * object.qty);
+            }, 0);
+        };
 
-        // Tampilkan hanya menu dengan jenis yang sesuai dengan jenis yang dipilih
-        $(`.row > div[id^='menu_${jenisId}']`).removeClass('d-none');
-    }
+        const changeQty = (el, inc) => {
+            const id = $(el).closest('li')[0].dataset.id;
+            const index = orderedList.findIndex(list => list.menu_id == id);
+            let currentQty = orderedList[index].qty;
+            let newQty = currentQty + inc;
+            if (newQty < 1) {
+                Swal.fire({
+                    icon: "info",
+                    title: "Info",
+                    text: "Kuantitas Minimal 1!",
+                });
+                return;
+            }
+            if (newQty > 10) {
+                Swal.fire({
+                    icon: "info",
+                    title: "Info",
+                    text: "Kuantitas Maksimal 10!",
+                });
+                return;
+            }
+            orderedList[index].qty = newQty;
+            const txt_subtotal = $(el).closest('li').find('.subtotal')[0];
+            const txt_qty = $(el).closest('li').find('.qty-item')[0];
+            txt_qty.innerHTML = newQty;
+            txt_subtotal.innerHTML = `Rp.${orderedList[index].harga * newQty}`;
+            $('#total').html(`Rp.${sum()}`);
+        };
 
-    function addToOrder(id, nama_menu, harga) {
-        const orderedList = $('.ordered-list');
-        const existingItem = orderedList.find(`li[data-id="${id}"]`);
-
-        if (existingItem.length > 0) {
-            const qtyItem = existingItem.find('.qty-item');
-            const currentQty = parseInt(qtyItem.text());
-            qtyItem.text(currentQty + 1);
-            updateSubtotal(existingItem, qty, harga);
-        } else {
-            const listItem = `
-                <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${id}">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex justify-content-between mb-3">
-                            <h5 class="pt-1">${nama_menu}</h5>
-                            <button type="button" class="btn-close btn-lg remove-item" aria-label="Close"></button>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="me-4">
-                                <p class="mb-2">Harga</p>
-                                <h5 class="small">Rp.${harga}</h5>
-                            </div>
-                            <div class="d-flex align-items-center border rounded me-4 mt-4">
-                                <button class="btn-dec border-0 ">-</button>
-                                <div class="qty-item border-0 small text-center px-2" contenteditable="false">1</div>
-                                <button class="btn-inc border-0 ">+</button>
-                            </div>
-                            <div class="ms-auto">
-                                <p class="mb-2">Total</p>
-                                <h5 class="small subtotal">Rp.${harga}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            `;
-            orderedList.append(listItem);
-        }
-
-        updateTotal();
-    }
-
-    function updateSubtotal(item, qty, harga) {
-        const subtotal = qty * harga;
-        item.find('.subtotal').text(`Rp.${subtotal}`);
-    }
-
-    function updateTotal() {
-        let total = 0;
-        $('.ordered-list li').each(function() {
-            const subtotalText = $(this).find('.subtotal').text();
-            const subtotal = parseFloat(subtotalText.replace('Rp.', ''));
-            total += subtotal;
+        $('.ordered-list').on('click', '.btn-dec', function() {
+            changeQty(this, -1);
         });
-        $('#total').text(`Rp.${total}`);
-    }
 
-    $(document).on('click', '.btn-dec', function() {
-        const qtyItem = $(this).siblings('.qty-item');
-        let qty = parseInt(qtyItem.text());
-        if (qty > 1) {
-            qty--;
-            qtyItem.text(qty);
-            const harga = parseFloat($(this).closest('li').find('.small').text().replace('Rp.', ''));
-            updateSubtotal($(this).closest('li'), qty, harga);
-            updateTotal();
-        }
-    });
+        $('.ordered-list').on('click', '.btn-inc', function() {
+            changeQty(this, 1);
+        });
 
-    $(document).on('click', '.btn-inc', function() {
-        const qtyItem = $(this).siblings('.qty-item');
-        let qty = parseInt(qtyItem.text());
-        if (qty < 10) {
-            qty++;
-            qtyItem.text(qty);
-            const harga = parseFloat($(this).closest('li').find('.small').text().replace('Rp.', ''));
-            updateSubtotal($(this).closest('li'), qty, harga);
-            updateTotal();
-        }
-    });
+        $('.ordered-list').on('click', '.remove-item', function() {
+            const item = $(this).closest('li')[0];
+            let index = orderedList.findIndex(list => list.id == parseInt(item.dataset.id));
+            orderedList.splice(index, 1);
+            $(this).closest('li').remove();
+            $('#total').html(`Rp.${sum()}`);
+        });
 
-    $(document).on('click', '.remove-item', function() {
-        $(this).closest('li').remove();
-        updateTotal();
-    });
+        $('.btn-remove-all').on('click', function() {
+            $('.ordered-list').empty(); // Menghapus semua item dari ordered list
+            orderedList = []; // Mengosongkan orderedList (jika variabel tersebut didefinisikan sebelumnya)
+            $('#total').html(`Rp.${sum()}`); // Mengupdate total setelah semua item dihapus
+        });
 
-    $(document).ready(function() {
-        // Initialize total
-        updateTotal();
-
-        $('#btn-bayar').on('click', function() {
-            const totalBayar = $('#total').text();
-            if (parseFloat(totalBayar.replace('Rp.', '')) === 0) {
+        $('#btn-bayar').on('click', function(event) {
+            event.preventDefault();
+            if (orderedList.length === 0) {
                 Swal.fire({
                     icon: "error",
                     title: "Terjadi Kesalahan",
-                    text: "Anda belum memilih pesanan apapun!"
+                    text: "Anda Belum Memesan Apapun!",
                 });
-            } else {
-                Swal.fire({
-                    icon: "success",
-                    title: "Pembayaran Berhasil",
-                    text: "Pemesanan Diproses!"
-                });
-
-                // Collect ordered items
-                const orderedList = [];
-                $('.ordered-list li').each(function() {
-                    const id = $(this).data('id');
-                    const nama_menu = $(this).find('h5').text();
-                    const qty = parseInt($(this).find('.qty-item').text());
-                    const harga = parseFloat($(this).find('.small').text().replace('Rp.', ''));
-                    orderedList.push({
-                        id: id,
-                        nama_menu: nama_menu,
-                        qty: qty,
-                        harga: harga
-                    });
-                });
-
-                // Send AJAX request
-                $.ajax({
-                    url: "{{ route('transaksi.store') }}",
-                    method: "post",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        orderedList: orderedList,
-                        total: totalBayar
-                    },
-                    success: function(data) {
-                        console.log(data);
-                    }
-                });
+                return;
             }
+
+            // Swal.fire({
+            //     icon: "success",
+            //     title: "Pembayaran Berhasil",
+            //     text: "Pemesanan Sedang Diproses!",
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         window.location.reload();
+            //     }
+            // })
+
+            $.ajax({
+                url: "{{ route('transaksi.store') }}",
+                method: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    orderedList: orderedList,
+                    total: sum() // Perbarui total menggunakan fungsi sum()
+                },
+                success: function(data) {
+                    console.log(data);
+                    Swal.fire({
+                        title: data.message,
+                        showDenyButton: true,
+                        confirmButtonText: 'Cetak Nota',
+                        denyButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.open("{{ url('nota') }}/" + data.noTrans)
+                            location.reload();
+                        } else if (result.isDenied) {
+                            location.reload();
+                        }
+                    })
+                },
+                error: function(request, status, error) {
+                    console.log(status, error);
+                    Swal.fire('Pemesanan Gagal');
+                }
+            });
+        });
+
+        $(".menu-item li").click(function() {
+            const menu_clicked = $(this).text();
+            const data = $(this)[0].dataset;
+            const harga = parseFloat(data.harga);
+            const id = parseInt(data.id);
+
+            if (orderedList.every(list => list.menu_id !== id)) {
+                let dataN = {
+                    'menu_id': id,
+                    'menu': menu_clicked,
+                    'harga': harga,
+                    'qty': 1
+                };
+                orderedList.push(dataN);
+                let listOrder = `
+            <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${id}">
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 class="p-1">${menu_clicked}</h5>
+                        <button type="button" class="btn-close btn-lg remove-item" aria-label="Close"></button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-5">
+                            <p class="mb-2">Harga</p>
+                            <h5 class="small">Rp.${harga}</h5>
+                        </div>
+                        <div class="d-flex align-items-center border rounded me-5 mt-4">
+                            <button class="btn-dec border-0 ">-</button>
+                            <div class="qty-item border-0 small text-center px-2" contenteditable="false">1</div>
+                            <button class="btn-inc border-0 ">+</button>
+                        </div>
+                        <div class="ms-auto">
+                            <p class="mb-2">Total</p>
+                            <h5 class="small subtotal">Rp.${harga * 1}</h5>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            `;
+                $('.ordered-list').append(listOrder);
+            }
+            $('#total').html(`Rp.${sum()}`);
         });
     });
 </script>
@@ -237,9 +248,5 @@
         width: 45px;
         outline: none;
         border: none;
-    }
-
-    .card-title{
-        font-size: 15px !important;
     }
 </style>

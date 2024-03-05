@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MenuExport;
 use App\Models\Menu;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
+use App\Imports\MenuImport;
 use App\Models\Jenis;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use PDOException;
+use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
@@ -85,5 +90,24 @@ class MenuController extends Controller
         $menu->delete();
 
         return redirect('menu')->with('success', 'Delete Data Berhasil!');
+    }
+
+    public function generateExcel()
+    {
+        $date = date('Y-m-d');
+        return Excel::download(new MenuExport, $date . 'menu.xlsx');
+    }
+
+    public function generatepdf()
+    {
+        $menu = Menu::all();
+        $pdf = Pdf::loadView('menu.data', compact('menu'));
+        return $pdf->download('menu.pdf');
+    }
+    public function importData(Request $request)
+    {
+
+        Excel::import(new MenuImport, $request->import);
+        return redirect()->back()->with('success', 'Data berhasil di import');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use App\Http\Requests\TransaksiRequest;
+use App\Models\DetailTransaksi;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -49,12 +50,36 @@ class TransaksiController extends Controller
                 'metode_pembayaran' => 'cash', // Sesuaikan dengan logika bisnis Anda
                 'keterangan' => ''
             ]);
+            if(!$insertTransaksi->exists) return 'error';
+
+            foreach($request->orderedList as $detail){
+                    DetailTransaksi::create([
+                    'transaksi_id' => $noTrans,
+                    'menu_id' => $detail['menu_id'],
+                    'jumlah' => $detail['qty'],
+                    'subTotal' => $detail['jumlah'] * $detail['qty']
+                ]);
+            }
 
             DB::commit();
-            return $insertTransaksi;
+            return response()->json(['status' => true, 'message' => 'Pemesanan Berhasil!', 'noTrans' => $insertTransaksi->id]);
         } catch (QueryException | Exception | PDOException $e) {
+            
+            return response()->json(['status' => false, 'message' => 'Pemesanan Gagal!']);
+            dd($e->getMessage());
             DB::rollBack();
-            return $e->getMessage(); // Mengembalikan pesan kesalahan yang lebih informatif
+        }
+    }
+
+    public function faktur($noFaktur){
+        try{
+            $data['transaksi'] = Transaksi::where('id', $noFaktur)->with(['detailTransaksi' => function($query){
+                $query->with('menu');
+            }])->first();
+
+            return view('faktur.index')->with($data);
+        }catch(Exception | QueryException | PDOException $e){
+            return response()->json(['status' => false, 'message' => 'Pemesanan Gagal!']);
         }
     }
 
