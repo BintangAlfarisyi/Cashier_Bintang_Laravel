@@ -21,6 +21,10 @@
     <link href="{{ asset('assets/favicon.ico') }}" rel="icon">
     <link href="{{ asset('assets/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
+    <!-- Favicons -->
+    <link href="{{ asset('admin') }}/img/favicon.png" rel="icon">
+    <link href="{{ asset('admin') }}/img/apple-touch-icon.png" rel="apple-touch-icon">
+
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -37,6 +41,9 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('admin') }}/css/style.css" rel="stylesheet">
 
+    <!-- dataTable -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+
     @stack('style')
 
     <!-- =======================================================
@@ -45,7 +52,7 @@
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    ======================================================== -->
 </head>
 
 <body>
@@ -354,14 +361,7 @@
             </li><!-- End Produk Titipan Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/layanan">
-                    <i class="bi bi-envelope-fill"></i>
-                    <span>Layanan Aplikasi</span>
-                </a>
-            </li><!-- End Layanan Aplikasi Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/Tentang">
+                <a class="nav-link collapsed" href="/tentang">
                     <i class="bi bi-info-circle"></i>
                     <span>Tentang Aplikasi</span>
                 </a>

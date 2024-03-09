@@ -157,15 +157,15 @@
                         denyButtonText: 'Cancel'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.open("{{ url('nota') }}/" + data.noTrans)
+                            window.open("{{ url('nota') }}/" + data.notrans)
                             location.reload();
                         } else if (result.isDenied) {
                             location.reload();
                         }
                     })
                 },
-                error: function(request, status, error) {
-                    console.log(status, error);
+                error: function(error) {
+                    console.log(error);
                     Swal.fire('Pemesanan Gagal');
                 }
             });

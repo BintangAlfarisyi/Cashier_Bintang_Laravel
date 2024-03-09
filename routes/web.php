@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DetailTransaksiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LayananController;
 use App\Http\Controllers\MejaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\TentangController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,16 +37,21 @@ Route::resource('/detail_transaksi', DetailTransaksiController::class);
 Route::resource('/meja', MejaController::class);
 Route::resource('/pemesanan', PemesananController::class);
 Route::resource('/produk', ProdukController::class);
-// Route::resource('/checkout', CheckoutController::class);
+
+Route::get('/tentang', [TentangController::class, 'index']);
 
 // Export Import
 Route::get('export/menu', [MenuController::class, 'generateexcel'])->name('exportExcelMenu');
 Route::get('generate/menu', [MenuController::class, 'generatepdf'])->name('exportPdfMenu');
 Route::get('export/jenis', [JenisController::class, 'generateexcel'])->name('exportExcelJenis');
 Route::get('generate/jenis', [JenisController::class, 'generatepdf'])->name('exportPdfJenis');
+Route::get('export/produk', [ProdukController::class, 'generateexcel'])->name('exportExcelProduk');
+Route::get('generate/produk', [ProdukController::class, 'generatepdf'])->name('exportPdfProduk');
 
 // Import
 Route::post('jenis/import', [JenisController::class, 'importData'])->name('bintang');
 Route::post('menu/import', [MenuController::class, 'importData'])->name('bintang');
+Route::post('produk/import', [ProdukController::class, 'importData'])->name('importProduk');
+
 // Nota Faktur
-Route::get('nota/{noFaktur}', [TransaksiController::class, 'faktur']);
+Route::get('nota/{nofaktur}', [TransaksiController::class, 'faktur']);

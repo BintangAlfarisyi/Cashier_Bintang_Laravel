@@ -11,11 +11,11 @@
                     <div id="method"></div>
                     <div class="mb-3">
                         <label for="menu_id" class="form-label">Menu Id</label>
-                        <input type="text" class="form-control" id="menu_id" name="menu_id">
+                        <input type="number" class="form-control" id="menu_id" name="menu_id">
                     </div>
                     <div class="mb-3">
                         <label for="jumlah" class="form-label">Jumlah</label>
-                        <input type="text" class="form-control" id="jumlah" name="jumlah">
+                        <input type="number" class="form-control" id="jumlah" name="jumlah">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

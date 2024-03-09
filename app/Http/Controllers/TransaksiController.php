@@ -7,6 +7,7 @@ use App\Http\Requests\TransaksiRequest;
 use App\Models\DetailTransaksi;
 use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDOException;
 
@@ -33,53 +34,52 @@ class TransaksiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TransaksiRequest $request)
+    public function store(Request $request)
     {
         try {
             DB::beginTransaction();
 
-            $last_id = Transaksi::where('tanggal', date('Y-m-d'))->orderBy('id', 'desc')->select('id')->first();
-            $next_id_suffix = $last_id ? (int)substr($last_id->id, 10) + 1 : 1;
+            $last_id = Transaksi::where('tanggal', date('Y-m-d'))->orderBy('created_at', 'ASC')->select('id')->first();
 
-            $noTrans = date('Ymd') . sprintf('%03d', $next_id_suffix);
+            $notrans = $last_id == null ? date('Ymd') . '0001' : date('Ymd') . sprintf('%04d', substr($last_id->id, 8, 4) + 1);
+            // dd($notrans);
 
             $insertTransaksi = Transaksi::create([
-                'id' => $noTrans,
+                'id' => $notrans,
                 'tanggal' => date('Y-m-d'),
                 'total_harga' => $request->total,
                 'metode_pembayaran' => 'cash', // Sesuaikan dengan logika bisnis Anda
                 'keterangan' => ''
             ]);
-            if(!$insertTransaksi->exists) return 'error';
+            if (!$insertTransaksi) return 'error';
 
-            foreach($request->orderedList as $detail){
-                    DetailTransaksi::create([
-                    'transaksi_id' => $noTrans,
+            foreach ($request->orderedList as $detail) {
+                DetailTransaksi::create([
+                    'transaksi_id' => $notrans,
                     'menu_id' => $detail['menu_id'],
                     'jumlah' => $detail['qty'],
-                    'subTotal' => $detail['jumlah'] * $detail['qty']
+                    'sub_total' => $detail['harga'] * $detail['qty']
                 ]);
             }
 
             DB::commit();
-            return response()->json(['status' => true, 'message' => 'Pemesanan Berhasil!', 'noTrans' => $insertTransaksi->id]);
+            return response()->json(['status' => true, 'message' => 'Pemesanan Berhasil!', 'notrans' => $notrans]);
         } catch (QueryException | Exception | PDOException $e) {
-            
-            return response()->json(['status' => false, 'message' => 'Pemesanan Gagal!']);
-            dd($e->getMessage());
             DB::rollBack();
+            return response()->json(['status' => false, 'message' => 'Pemesanan Gagal!', 'error' => $e->getMessage()]);
         }
     }
 
-    public function faktur($noFaktur){
-        try{
-            $data['transaksi'] = Transaksi::where('id', $noFaktur)->with(['detailTransaksi' => function($query){
-                $query->with('menu');
-            }])->first();
+    public function faktur($nofaktur)
+    {
+        try {
+            $transaksi = Transaksi::findOrFail($nofaktur);
+            $data['transaksi'] = $transaksi->load('detailTransaksi.menu');
 
-            return view('faktur.index')->with($data);
-        }catch(Exception | QueryException | PDOException $e){
-            return response()->json(['status' => false, 'message' => 'Pemesanan Gagal!']);
+            return view('faktur.index', compact('data'));
+        } catch (Exception $e) {
+            $message = 'Transaksi tidak ditemukan!';
+            return view('faktur.index', compact('message'));
         }
     }
 

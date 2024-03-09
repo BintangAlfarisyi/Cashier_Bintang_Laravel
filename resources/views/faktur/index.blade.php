@@ -2,8 +2,9 @@
     <h2>Cafe Indomart</h2>
     <h5>Jl. Arwinda Kp. Pateken Rt 03 Rw 03</h5>
     <hr>
-    <h5>No. Faktur : {{ $transaksi->id }}</h5>
-    <h5>{{ $transaksi->tanggal }}</h5>
+    @isset($data['transaksi'])
+    <h5>No. Faktur : {{ $data['transaksi']->id }}</h5>
+    <h5>{{ $data['transaksi']->tanggal }}</h5>
     <table>
         <thead>
             <tr>
@@ -14,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($transaksi->detailTransaksi as $item)
+            @foreach($data['transaksi']->detailTransaksi as $item)
             <tr>
                 <td>{{ $item->jumlah }}</td>
                 <td>{{ $item->menu->nama_menu }}</td>
@@ -23,11 +24,14 @@
             </tr>
             @endforeach
         </tbody>
-        <tFoot>
+        <tfoot>
             <tr>
                 <td colspan='3'>Total</td>
-                <td>{{ number_format($transaksi->total_harga, 0, ",", ".") }}</td>
+                <td>{{ number_format($data['transaksi']->total_harga, 0, ",", ".") }}</td>
             </tr>
-        </tFoot>
+        </tfoot>
     </table>
+    @else
+    <p>{{ $message }}</p>
+    @endisset
 </body>

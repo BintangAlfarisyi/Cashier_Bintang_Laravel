@@ -19,7 +19,7 @@
     <section class="section dashboard">
         <div class="row">
             <div class="card-body">
-                
+
                 <!-- Alert Success -->
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,9 +40,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormProduk">
                     <i class="bi bi-plus"></i> Tambah Produk Titipan
+                </button>
+                <a href="{{ route('exportExcelProduk') }}" class="btn btn-success">
+                    <i class="bi bi-filetype-xlsx"></i> Export XSLX
+                </a>
+                <a href="{{ route('exportPdfProduk') }}" class="btn btn-danger">
+                    <i class="bi bi-file-pdf"></i> Export PDF
+                </a>
+                <button href="{{ route('importProduk') }}" type="button" class="btn btn-warning btn-import" data-bs-toggle="modal" data-bs-target="#modalFormImportProduk">
+                    <i class="bi bi-filetype-xlsx"></i> Import
                 </button>
                 @include('produk.data')
             </div>
@@ -53,9 +61,11 @@
 @endsection
 
 @include('produk.form')
+@include('produk.import')
 
 @push('script')
 <script>
+    // Alert Berinteraksi   
     $('.alert-success').fadeTo(2000, 500).slideUp(500, function() {
         $('.alert-success').slideUp(500)
     })
@@ -64,6 +74,16 @@
         $('.alert-danger').slideUp(500)
     })
 
+    // dataTable
+    // $(document).ready(function() {
+    //     $('#myTable').DataTable();
+    // });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        new simpleDatatables.DataTable('.datatable');
+    });
+
+    // Hapus Data
     $(function() {
         // dialog hapus data
         $('.btn-delete').on('click', function(e) {
@@ -121,10 +141,43 @@
                 modal.find('form').attr('action', '{{ url("produk") }}')
             }
         })
-        
+
         $('#modalFormProduk').on('shown.bs.modal', function() {
             $('#nama_produk').delay(1000).focus().select();
         })
     })
+
+    // Fungsi Penambahan Harga Jual
+    document.getElementById("harga_beli").addEventListener("input", function() {
+        var hargaBeli = parseFloat(this.value);
+        var hargaJual = hargaBeli * 1.7; // Menambahkan 70%
+        document.getElementById("harga_jual").value = hargaJual;
+    });
 </script>
 @endpush
+
+<style>
+    /* Gaya untuk tabel DataTable */
+    #myTable_wrapper {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    #myTable_filter input[type="search"] {
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    .dataTables_wrapper .sorting,
+    .dataTables_wrapper .sorting_asc,
+    .dataTables_wrapper .sorting_desc {
+        vertical-align: middle;
+        /* Mengatur vertikal alignment agar ikon sejajar dengan teks di dalam header */
+        margin-top: -3px;
+        /* Menggeser ikon sedikit ke atas */
+    }
+</style>
