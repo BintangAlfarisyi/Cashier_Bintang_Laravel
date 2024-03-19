@@ -24,7 +24,7 @@ class UpdateMenuRequest extends FormRequest
         return [
             'nama_menu' => 'required',
             'harga' => 'required',
-            'gambar' => 'required',
+            // 'gambar' => 'required',
             'keterangan' => 'required',
             'jenis_id' => 'required'
         ];
@@ -35,7 +35,7 @@ class UpdateMenuRequest extends FormRequest
         return [
             'nama_menu.required' => 'Data Nama Menus belum diisi!',
             'harga.required' => 'Data Harga belum diisi!',
-            'gambar.required' => 'Data Gambar belum diisi!',
+            // 'gambar.required' => 'Data Gambar belum diisi!',
             'keterangan.required' => 'Data Keterangan belum diisi!',
             'jenis_id.required' => 'Data Jenis Id belum diisi!'
         ];

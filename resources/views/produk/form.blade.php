@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalFormProdukLabel">Tambah Data</h5>
-                <button type="button" class="btn-close" style="font-size: 2rem;" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post" action="produk" enctype="multipart/form-data">
@@ -44,6 +44,32 @@
                 </form>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importProduk" tabindex="-1" aria-labelledby="importProdukModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importProdukModalLabel">Import Data Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url('produk/import') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="import" class="form-label">Pilih File Excel</label>
+                            <input type="file" class="form-control" name="import" id="import" accept=".xls, .xlsx">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Unggah</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

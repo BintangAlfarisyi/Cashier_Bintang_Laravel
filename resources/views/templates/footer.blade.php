@@ -31,7 +31,34 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- dataTable -->
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/2.0.2/js/dataTables.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js" type="text/javascript"></script>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    new DataTable('#myTable');
+
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Konfirmasi Logout',
+            text: 'Apakah kamu yakin akan keluar?',
+            showDenyButton: true,
+            confirmButtonText: 'Ya',
+            denyButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.isConfirmed)
+                window.location.href = "/logout"
+            else swal.close()
+        })
+    });
+</script>
 
 @stack('script')
 </body>

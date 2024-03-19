@@ -22,16 +22,14 @@ class StoreJenisRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_jenis' => 'required',
-            'kategori_id' => 'required'
+            'nama_jenis' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'nama_jenis.required' => 'Data Nama Jenis belum diisi!',
-            'kategori_id.required' => 'Data Kategori Id belum diisi!'
+            'nama_jenis.required' => 'Data Nama Jenis belum diisi!'
         ];
     }
 }

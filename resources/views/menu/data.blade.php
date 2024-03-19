@@ -1,5 +1,5 @@
 <div class="mt-4">
-    <table class="table table-striped rounded overflow-hidden" id="myTable">
+    <table class="table table-hover rounded overflow-hidden" id="myTable">
         <thead>
             <tr>
                 <th>No.</th>
@@ -17,7 +17,7 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $m->nama_menu }}</td>
                 <td>{{ $m->harga }}</td>
-                <td>{{ $m->gambar }}</td>
+                <td><img src="{{ asset('storage/' . $m->gambar) }}" alt="{{ $m->nama_menu }}" style="width: 50px; height: 50px;"></td>
                 <td>{{ $m->keterangan }}</td>
                 <td>{{ $m->jenis->nama_jenis }}</td>
                 <td>

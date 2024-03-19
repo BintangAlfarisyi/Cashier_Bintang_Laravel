@@ -11,7 +11,7 @@
                 <td>Qty</td>
                 <td>Item</td>
                 <td>Harga</td>
-                <td>Total</td>
+                <td>Sub Total</td>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
                 <td>{{ $item->jumlah }}</td>
                 <td>{{ $item->menu->nama_menu }}</td>
                 <td>{{ number_format($item->menu->harga, 0, ",", ".") }}</td>
-                <td>{{ number_format($item->subTotal, 0, ",", ".") }}</td>
+                <td>{{ number_format($item->sub_total, 0, ",", ".") }}</td>
             </tr>
             @endforeach
         </tbody>

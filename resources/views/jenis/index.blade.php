@@ -19,7 +19,7 @@
     <section class="section dashboard">
         <div class="row">
             <div class="card-body">
-                
+
                 <!-- Alert Success -->
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,19 +40,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormJenis">
-                    <i class="bi bi-plus"></i> Tambah Jenis
-                </button>
-                <a href="{{ route('exportExcelJenis') }}" class="btn btn-success">
-                    <i class="bi bi-table"></i> Export XSLX
-                </a>
-                <a href="{{ route('exportPdfJenis') }}" class="btn btn-danger">
-                    <i class="bi bi-file-pdf"></i> Export PDF
-                </a>
-                <button href="{{ route('bintang') }}" type="button" class="btn btn-warning btn-import"
-                    data-bs-toggle="modal" data-bs-target="#formImport">
-                    <i class="fas fa-file-import"></i> Import
-                </button>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormJenis">
+                        <i class="bi bi-plus"></i> Tambah Jenis
+                    </button>
+                    <div class="right">
+                        <a href="{{ route('exportExcelJenis') }}" class="btn btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export XSLX
+                        </a>
+                        <button href="{{ route('importJenis') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#ImportJenis">
+                            <i class="bi bi-file-earmark-excel"></i> Import XSLX
+                        </button>
+                        <a href="{{ route('exportPdfJenis') }}" class="btn btn-danger">
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </a>
+                    </div>
+                </div>
                 @include('jenis.data')
             </div>
         </div>

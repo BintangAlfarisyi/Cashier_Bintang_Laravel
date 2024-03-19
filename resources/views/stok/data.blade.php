@@ -1,5 +1,5 @@
 <div class="mt-4">
-    <table class="table table-striped rounded overflow-hidden" id="myTable">
+    <table class="table table-hover rounded overflow-hidden" id="myTable">
         <thead>
             <tr>
                 <th>No.</th>

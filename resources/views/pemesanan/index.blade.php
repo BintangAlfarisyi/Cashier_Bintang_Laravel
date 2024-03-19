@@ -12,32 +12,36 @@
         </nav>
     </div><!-- End Page Title -->
 
-    <div class="container d-flex justify-content-between p-3">
+    <div class="container d-flex justify-content-between align-items-start p-3">
         <div class="item" style="flex-basis: 60%;">
-            <div class="accordion" id="menuAccordion">
-                @foreach ($jenis as $j)
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading{{$j->id}}">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$j->id}}" aria-expanded="true" aria-controls="collapse{{$j->id}}">
-                            {{ $j->nama_jenis }}
-                        </button>
-                    </h2>
-                    <div id="collapse{{$j->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$j->id}}" data-bs-parent="#menuAccordion">
-                        <div class="accordion-body">
-                            <ul class="menu-item list-group list-group-flush">
-                                @foreach ($j->menu as $menu)
-                                <li class="list-group-item d-flex" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}">
-                                    {{ $menu->nama_menu }}
-                                </li>
-                                @endforeach
-                            </ul>
+            <div class="container">
+                <div class="jenis d-flex flex-row mb-2 m-0">
+                    @foreach($jenis as $j)
+                    <div class="form-check">
+                        <input type="radio" class="btn-check" name="options-outlined" id="jenis_{{ $j->id }}" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="jenis_{{ $j->id }}">{{ $j->nama_jenis }}</label>
+                    </div>
+                    @endforeach
+                </div>
+                <div class="row w-full p-3">
+                    @foreach ($jenis as $j)
+                    @foreach ($j->menu as $menu)
+                    <div class='col-md-4'>
+                        <div class="card mb-3" style="cursor: pointer;">
+                            <div class="card-body text-center">
+                                <h1 class="card-title mb-0">{{ $menu->nama_menu }}</h1>
+                                <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" style="width: 80px; height: 80px;" class="mb-3">
+                                <p class="card-text">Harga: {{ $menu->harga }}</p>
+                                <button class="btn-tambah btn btn-primary" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}" data-nama_menu="{{ $menu->nama_menu }}">Tambahkan</button>
+                            </div>
                         </div>
                     </div>
+                    @endforeach
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
-        <div class="item content p-4" style="flex-basis: 35%; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <div class="item content p-4 justify-content-between" style="flex-basis: 35%; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; height: auto;">
             <div class="title d-flex justify-content-between">
                 <h3>Order</h3>
                 <button class="btn btn-danger justify-content-center align-items-center p-0 mt-1 btn-remove-all" style="border-radius: 50%; width: 25px; height: 25px;"><i class="bi bi-x-circle h5"></i></button>
@@ -114,9 +118,9 @@
         });
 
         $('.btn-remove-all').on('click', function() {
-            $('.ordered-list').empty(); // Menghapus semua item dari ordered list
-            orderedList = []; // Mengosongkan orderedList (jika variabel tersebut didefinisikan sebelumnya)
-            $('#total').html(`Rp.${sum()}`); // Mengupdate total setelah semua item dihapus
+            $('.ordered-list').empty();
+            orderedList = [];
+            $('#total').html(`Rp.${sum()}`);
         });
 
         $('#btn-bayar').on('click', function(event) {
@@ -171,8 +175,8 @@
             });
         });
 
-        $(".menu-item li").click(function() {
-            const menu_clicked = $(this).text();
+        $(".btn-tambah").click(function() {
+            const menu_clicked = $(this).data('nama_menu');
             const data = $(this)[0].dataset;
             const harga = parseFloat(data.harga);
             const id = parseInt(data.id);
@@ -186,29 +190,29 @@
                 };
                 orderedList.push(dataN);
                 let listOrder = `
-            <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${id}">
-                <div class="d-flex flex-column">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h5 class="p-1">${menu_clicked}</h5>
-                        <button type="button" class="btn-close btn-lg remove-item" aria-label="Close"></button>
+                <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${id}">
+                    <div class="d-flex flex-column w-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="p-1">${menu_clicked}</h5>
+                            <button type="button" class="btn-close btn-lg remove-item" aria-label="Close"></button>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="me-5">
+                                <p class="mb-2">Harga</p>
+                                <h5 class="small">Rp.${harga}</h5>
+                            </div>
+                            <div class="d-flex align-items-center border rounded me-5 mt-4">
+                                <button class="btn-dec border-0 ">-</button>
+                                <div class="qty-item border-0 small text-center px-2" contenteditable="false">1</div>
+                                <button class="btn-inc border-0 ">+</button>
+                            </div>
+                            <div class="ms-auto">
+                                <p class="mb-2">Total</p>
+                                <h5 class="small subtotal">Rp.${harga * 1}</h5>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <div class="me-5">
-                            <p class="mb-2">Harga</p>
-                            <h5 class="small">Rp.${harga}</h5>
-                        </div>
-                        <div class="d-flex align-items-center border rounded me-5 mt-4">
-                            <button class="btn-dec border-0 ">-</button>
-                            <div class="qty-item border-0 small text-center px-2" contenteditable="false">1</div>
-                            <button class="btn-inc border-0 ">+</button>
-                        </div>
-                        <div class="ms-auto">
-                            <p class="mb-2">Total</p>
-                            <h5 class="small subtotal">Rp.${harga * 1}</h5>
-                        </div>
-                    </div>
-                </div>
-            </li>
+                </li>
             `;
                 $('.ordered-list').append(listOrder);
             }
@@ -226,6 +230,7 @@
     }
 
     .list-group-item {
+        position: relative;
         flex-grow: 1;
         margin-bottom: 10px;
         border: 1px solid #ccc;
@@ -239,6 +244,14 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
+    .btn-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        transform: translate(50%, -50%);
+        font-size: 30px !important;
+    }
+
     .btn-dec,
     .btn-inc {
         background-color: #fff;
@@ -248,5 +261,9 @@
         width: 45px;
         outline: none;
         border: none;
+    }
+
+    .card-title {
+        font-size: 17px !important;
     }
 </style>

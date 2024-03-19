@@ -4,7 +4,7 @@
             <tr>
                 <th>No.</th>
                 <th>Transaksi Id</th>
-                <th>Menu Id</th>
+                <th>Menu</th>
                 <th>Jumlah</th>
                 <th>Sub Total</th>
                 <th>Action</th>
@@ -15,7 +15,7 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $d->transaksi_id }}</td>
-                <td>{{ $d->menu_id }}</td>
+                <td>{{ $d->menu->nama_menu }}</td>
                 <td>{{ $d->jumlah }}</td>
                 <td>{{ $d->sub_total }}</td>
                 <td>

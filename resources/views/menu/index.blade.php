@@ -40,20 +40,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMenu">
-                    <i class="bi bi-plus"></i> Tambah Menu
-                </button>   
-                <a href="{{ route('exportExcelMenu') }}" class="btn btn-success">
-                    <i class="bi bi-table"></i> Export XSLX
-                </a>
-                <a href="{{ route('exportPdfMenu') }}" class="btn btn-danger">
-                    <i class="bi bi-file-pdf"></i> Export PDF
-                </a>
-                <button href="{{ route('bintang') }}" type="button" class="btn btn-warning btn-import"
-                    data-bs-toggle="modal" data-bs-target="#formImport">
-                    <i class="fas fa-file-import"></i> Import
-                </button>
+                <div class="d-flex justify-content-between">
+                    <div class="left">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMenu">
+                            <i class="bi bi-plus"></i> Tambah Menu
+                        </button>
+                    </div>
+                    <div class="right">
+                        <a href="{{ route('exportExcelMenu') }}" class="btn btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export XSLX
+                        </a>
+                        <button href="{{ route('importMenu') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#importMenu">
+                            <i class="bi bi-file-earmark-excel"></i> Import XSLX
+                        </button>
+                        <a href="{{ route('exportPdfMenu') }}" class="btn btn-danger">
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </a>
+                    </div>
+                </div>
                 @include('menu.data')
             </div>
         </div>
@@ -112,7 +116,6 @@
                 modal.find('.modal-title').text('Edit Data')
                 modal.find('#nama_menu').val(nama)
                 modal.find('#harga').val(harga)
-                modal.find('#gambar').val(gambar)
                 modal.find('#keterangan').val(keterangan)
                 modal.find('#jenis_id').val(jenis_id)
                 modal.find('#method').html('@method("PUT")')
@@ -133,25 +136,5 @@
             $('#nama_menu').delay(1000).focus().select();
         })
     })
-
-    document.getElementById('paymentForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var keterangan = document.getElementById('keterangan').value;
-        fetch('/process_payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    keterangan: keterangan
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // Handle response from server
-            })
-            .catch(error => console.error('Error:', error));
-    });
 </script>
 @endpush

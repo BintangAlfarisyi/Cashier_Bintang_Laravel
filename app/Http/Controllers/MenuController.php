@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PDOException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class MenuController extends Controller
 {
@@ -34,7 +36,6 @@ class MenuController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -44,7 +45,15 @@ class MenuController extends Controller
     {
         try {
             DB::beginTransaction(); #Mulai Transaksi
-            Menu::create($request->all()); #Query Input Ke Table
+            $menu = Menu::create($request->all()); #Query Input Ke Table
+
+            $file = $request->file('gambar');
+
+            $file_name = $file->getClientOriginalName();
+            $file_path = $file->storeAs('image', $file_name);
+
+            $menu->gambar = $file_path;
+            $menu->save();
 
             DB::commit(); #Menyimpan Data Ke Database
 
@@ -61,7 +70,6 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        
     }
 
     /**
@@ -69,7 +77,6 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        
     }
 
     /**
@@ -79,7 +86,23 @@ class MenuController extends Controller
     {
         $menu->update($request->all());
 
-        return redirect('menu')->with('success', 'Update Data Berhasil!');
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+
+            if ($file->isValid()) {
+                $file_name = $file->getClientOriginalName();
+                $file_path = $file->storeAs('image', $file_name);
+
+                $menu->gambar = $file_path;
+                $menu->save();
+
+                return redirect('menu')->with('success', 'Update Data Berhasil!');
+            } else {
+                return redirect('menu')->with('error', 'Gagal mengunggah gambar.');
+            }
+        } else {
+            return redirect('menu')->with('error', 'Tidak ada gambar yang diunggah.');
+        }
     }
 
     /**
@@ -98,15 +121,20 @@ class MenuController extends Controller
         return Excel::download(new MenuExport, $date . 'menu.xlsx');
     }
 
-    public function generatepdf()
+    public function generatePdf()
     {
         $menu = Menu::all();
+
+        foreach ($menu as $m) {
+            $m->nama_menu = "gambar_" . $m->nama_menu;
+        }
+
         $pdf = Pdf::loadView('menu.data', compact('menu'));
         return $pdf->download('menu.pdf');
     }
+
     public function importData(Request $request)
     {
-
         Excel::import(new MenuImport, $request->import);
         return redirect()->back()->with('success', 'Data berhasil di import');
     }

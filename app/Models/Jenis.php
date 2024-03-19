@@ -10,7 +10,7 @@ class Jenis extends Model
     use HasFactory;
 
     protected $table = 'jenis';
-    protected $fillable = ['nama_jenis', 'kategori_id'];
+    protected $fillable = ['nama_jenis'];
 
     public function menu()
     {

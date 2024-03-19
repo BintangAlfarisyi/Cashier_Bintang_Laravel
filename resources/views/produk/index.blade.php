@@ -40,18 +40,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormProduk">
-                    <i class="bi bi-plus"></i> Tambah Produk Titipan
-                </button>
-                <a href="{{ route('exportExcelProduk') }}" class="btn btn-success">
-                    <i class="bi bi-filetype-xlsx"></i> Export XSLX
-                </a>
-                <a href="{{ route('exportPdfProduk') }}" class="btn btn-danger">
-                    <i class="bi bi-file-pdf"></i> Export PDF
-                </a>
-                <button href="{{ route('importProduk') }}" type="button" class="btn btn-warning btn-import" data-bs-toggle="modal" data-bs-target="#modalFormImportProduk">
-                    <i class="bi bi-filetype-xlsx"></i> Import
-                </button>
+                <div class="d-flex justify-content-between">
+                    <div class="left">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormProduk">
+                            <i class="bi bi-plus"></i> Tambah Produk Titipan
+                        </button>
+                    </div>
+                    <div class="right">
+                        <a href="{{ route('exportExcelProduk') }}" class="btn btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export XSLX
+                        </a>
+                        <button href="{{ route('importProduk') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#importProduk">
+                            <i class="bi bi-file-earmark-excel"></i> Import XSLX
+                        </button>
+                        <a href="{{ route('exportPdfProduk') }}" class="btn btn-danger">
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </a>
+                    </div>
+                </div>
                 @include('produk.data')
             </div>
         </div>
@@ -74,15 +80,6 @@
         $('.alert-danger').slideUp(500)
     })
 
-    // dataTable
-    // $(document).ready(function() {
-    //     $('#myTable').DataTable();
-    // });
-
-    document.addEventListener('DOMContentLoaded', function () {
-        new simpleDatatables.DataTable('.datatable');
-    });
-
     // Hapus Data
     $(function() {
         // dialog hapus data
@@ -103,7 +100,6 @@
                 else swal.close()
             })
         })
-
 
         // Update or input
         $('#modalFormProduk').on('show.bs.modal', function(e) {
@@ -155,29 +151,3 @@
     });
 </script>
 @endpush
-
-<style>
-    /* Gaya untuk tabel DataTable */
-    #myTable_wrapper {
-        margin-bottom: 20px;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    #myTable_filter input[type="search"] {
-        margin-bottom: 10px;
-        border-radius: 5px;
-        padding: 5px;
-        border: 1px solid #ccc;
-    }
-    
-    .dataTables_wrapper .sorting,
-    .dataTables_wrapper .sorting_asc,
-    .dataTables_wrapper .sorting_desc {
-        vertical-align: middle;
-        /* Mengatur vertikal alignment agar ikon sejajar dengan teks di dalam header */
-        margin-top: -3px;
-        /* Menggeser ikon sedikit ke atas */
-    }
-</style>
