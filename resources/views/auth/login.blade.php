@@ -42,9 +42,11 @@
                                                     is-invalid
                                                 @enderror
                                                 " required name="email" id="email" value="{{ old('email') }}" placeholder="Masukan Email Anda">
+                                                @error('email')
                                                 <div class="invalid-feedback">
-                                                    Email harus diisi.
+                                                    {{ $message }}
                                                 </div>
+                                                @enderror
                                             </div>
                                         </div>
 

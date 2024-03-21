@@ -33,8 +33,8 @@ Route::get('/login', [UserController::class, 'index'])->name('login');
 Route::post('/login/cek', [UserController::class, 'cekLogin'])->name('cekLogin');
 
 // Registrasi
-Route::get('/registrasi', [RegsitrasiController::class, 'index'])->name('registrasi');
-Route::post('/registrasi', [RegsitrasiController::class, 'register']);
+Route::get('/registrasi', [UserController::class, 'registrasi'])->name('registrasi');
+Route::post('/registrasi', [UserController::class, 'register']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index']);
@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
     // kasir
     Route::group(['middleware' => ['cekUserLogin:2']], function () {
         Route::resource('/pemesanan', PemesananController::class);
+        Route::post('/pemesanan-transaksi', [TransaksiController::class, 'makeTransaksi'])->name('pemesanan-transaksi');
 
         // Nota Faktur
         Route::get('nota/{nofaktur}', [TransaksiController::class, 'faktur']);

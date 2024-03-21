@@ -26,7 +26,7 @@
                 <div class="row w-full p-3">
                     @foreach ($jenis as $j)
                     @foreach ($j->menu as $menu)
-                    <div class='col-md-4'>
+                    <div class='col-md-5'>
                         <div class="card mb-3" style="cursor: pointer;">
                             <div class="card-body text-center">
                                 <h1 class="card-title mb-0">{{ $menu->nama_menu }}</h1>
@@ -64,7 +64,7 @@
 <script>
     $(function() {
         // Inisialisasi
-        const orderedList = [];
+        let orderedList = [];
 
         const sum = () => {
             return orderedList.reduce((accumulator, object) => {
@@ -111,7 +111,7 @@
 
         $('.ordered-list').on('click', '.remove-item', function() {
             const item = $(this).closest('li')[0];
-            let index = orderedList.findIndex(list => list.id == parseInt(item.dataset.id));
+            let index = orderedList.findIndex(list => list.menu_id == parseInt(item.dataset.id));
             orderedList.splice(index, 1);
             $(this).closest('li').remove();
             $('#total').html(`Rp.${sum()}`);
@@ -145,7 +145,7 @@
             // })
 
             $.ajax({
-                url: "{{ route('transaksi.store') }}",
+                url: "{{ route('pemesanan-transaksi') }}",
                 method: "post",
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -194,7 +194,7 @@
                     <div class="d-flex flex-column w-100">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="p-1">${menu_clicked}</h5>
-                            <button type="button" class="btn-close btn-lg remove-item" aria-label="Close"></button>
+                            <button type="button" class="btn-close remove-item" aria-label="Close"></button>
                         </div>
                         <div class="d-flex align-items-center">
                             <div class="me-5">
@@ -212,11 +212,11 @@
                             </div>
                         </div>
                     </div>
-                </li>
-            `;
+                </li>`;
                 $('.ordered-list').append(listOrder);
             }
             $('#total').html(`Rp.${sum()}`);
+        
         });
     });
 </script>
@@ -249,7 +249,6 @@
         top: 20px;
         right: 20px;
         transform: translate(50%, -50%);
-        font-size: 30px !important;
     }
 
     .btn-dec,
