@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +22,6 @@ class UserController extends Controller
         }
         return view('auth.login');
     }
-
     public function cekLogin(AuthRequest $request)
     {
         $credential = $request->only('email', 'password');
@@ -44,10 +42,9 @@ class UserController extends Controller
         }
 
         return back()->withErrors([
-            'nofound' => 'Email atau Password salah!'
+            'nofound' => 'Email or password is wrong'
         ])->onlyInput('email');
     }
-
     public function logout(Request $request)
     {
         Auth::logout();
@@ -58,34 +55,42 @@ class UserController extends Controller
         return redirect('/login');
     }
 
-    public function registrasi()
-    {
-        return view('auth.registrasi');
-    }
+    // public function registrasi()
+    // {
+    //     return view('auth.registrasi');
+    // }
 
 
-    public function register(Request $request)
-    {
-        // Validasi data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'level' => 'required',
-        ]);
+    // public function register(Request $request)
+    // {
+    //     // Validasi data
+    //     $validatedData = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users',
+    //         'password' => 'required|string|min:8',
+    //         'level' => 'required',
+    //         'alamat' => 'required',
+    //         'ponsel' => 'required',
+    //     ]);
 
-        // Buat user baru
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
-            'level' => $validatedData['level']
-        ]);
+    //     // Tentukan default path untuk gambar
+    //     $defaultImageName = 'akun.jpeg';
 
-        // Otentikasi user
-        auth()->login($user);
+    //     // Buat user baru
+    //     $user = User::create([
+    //         'name' => $validatedData['name'],
+    //         'email' => $validatedData['email'],
+    //         'password' => bcrypt($validatedData['password']),
+    //         'level' => $validatedData['level'],
+    //         'alamat' => $validatedData['alamat'],
+    //         'ponsel' => $validatedData['ponsel'],
+    //         'gambar' => $defaultImageName,
+    //     ]);
 
-        // Redirect ke halaman login dengan pesan sukses
-        return redirect('/login')->with('success', 'Akun Anda telah berhasil dibuat. Silakan login.');
-    }
+    //     // Otentikasi user
+    //     auth()->login($user);
+
+    //     // Redirect ke halaman login dengan pesan sukses
+    //     return redirect('/login')->with('success', 'Akun Anda telah berhasil dibuat. Silakan login.');
+    // }
 }

@@ -98,9 +98,10 @@ class JenisController extends Controller
 
     public function generatepdf()
     {
-        $jenis = Jenis::all();
-        $pdf = Pdf::loadView('jenis.data', compact('jenis'));
-        return $pdf->download('jenis.pdf');
+        $data = Jenis::all();
+
+        $pdf = PDF::loadView('jenis.jenisPdf', compact('data'));
+        return $pdf->stream('jenis.pdf');
     }
 
     public function importData(Request $request)

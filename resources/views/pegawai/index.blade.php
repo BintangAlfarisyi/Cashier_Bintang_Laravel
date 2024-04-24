@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Jenis</h1>
+        <h1>Absensi Kerja Karywan</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/jenis">Jenis</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/pegawai">Abesensi</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -41,22 +41,22 @@
                 </div>
                 @endif
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormJenis">
-                        <i class="bi bi-plus"></i> Tambah Jenis
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormPegawai">
+                        <i class="bi bi-plus"></i> Tambah Pegawai
                     </button>
                     <div class="right">
-                        <a href="{{ route('exportExcelJenis') }}" class="btn btn-success">
+                        <a href="{{ route('exportExcelPegawai') }}" class="btn btn-success">
                             <i class="bi bi-file-earmark-excel"></i> Export XSLX
                         </a>
-                        <button href="{{ route('importJenis') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#ImportJenis">
+                        <button href="{{ route('importPegawai') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#ImportPegawai">
                             <i class="bi bi-file-earmark-excel"></i> Import XSLX
                         </button>
-                        <a href="{{ route('exportPdfJenis') }}" class="btn btn-danger" target="_blank">
+                        <a href="{{ route('exportPdfPegawai') }}" class="btn btn-danger" target="_blank">
                             <i class="bi bi-file-earmark-pdf"></i> Export PDF
                         </a>
                     </div>
                 </div>
-                @include('jenis.data')
+                @include('pegawai.data')
             </div>
         </div>
     </section>
@@ -64,7 +64,7 @@
 </main><!-- End #main -->
 @endsection
 
-@include('jenis.form')
+@include('pegawai.form')
 
 @push('script')
 <script>
@@ -98,32 +98,41 @@
 
 
         // Update or input
-        $('#modalFormJenis').on('show.bs.modal', function(e) {
+        $('#modalFormPegawai').on('show.bs.modal', function(e) {
             const btn = $(e.relatedTarget)
             const modal = $(this)
             const mode = btn.data('mode')
             const id = btn.data('id')
-            const nama = btn.data('nama_jenis')
-            const kategori_id = btn.data('kategori_id')
+            const nama = btn.data('nama_karyawan')
+            const tanggal_masuk = btn.data('tanggal_masuk')
+            const waktu_masuk = btn.data('waktu_masuk')
+            const status = btn.data('status')
+            const waktu_keluar = btn.data('waktu_keluar')
 
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_jenis').val(nama)
-                modal.find('#kategori_id').val(kategori_id)
+                modal.find('#nama_karyawan').val(nama)
+                modal.find('#tanggal_masuk').val(tanggal_masuk)
+                modal.find('#waktu_masuk').val(waktu_masuk)
+                modal.find('#status').val(status)
+                modal.find('#waktu_keluar').val(waktu_keluar)
                 modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('jenis') }}/${id}`)
+                modal.find('form').attr('action', `{{ url('pegawai') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_jenis').val('')
-                modal.find('#kategori_id').val('')
+                modal.find('#nama_karyawan').val('')
+                modal.find('#tanggal_masuk').val('')
+                modal.find('#waktu_masuk').val('')
+                modal.find('#status').val('')
+                modal.find('#waktu_keluar').val('')
                 modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("jenis") }}')
+                modal.find('form').attr('action', '{{ url("pegawai") }}')
             }
         })
 
-        $('#modalFormJenis').on('shown.bs.modal', function() {
-            $('#nama_jenis').delay(1000).focus().select();
+        $('#modalFormPegawai').on('shown.bs.modal', function() {
+            $('#nama_karyawan').delay(1000).focus().select();
         })
     })
 </script>

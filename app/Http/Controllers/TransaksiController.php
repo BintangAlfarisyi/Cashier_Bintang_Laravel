@@ -39,13 +39,15 @@ class TransaksiController extends Controller
         //
     }
 
-    public function makeTransaksi(Request $request) {
+    public function makeTransaksi(Request $request)
+    {
         try {
             DB::beginTransaction();
 
-            $last_id = Transaksi::select('id')->latest()->first();
-            $notrans = $last_id == null ? date('Ymd') . '0001' : date('Ymd') . sprintf('%04d', substr($last_id->id, 8, 4) + 1);
-            
+            $last_id = Transaksi::whereDate('tanggal', today())->orderBy('id', 'desc')->first();
+            $last_id_number = $last_id ? substr($last_id->id, 8) : 0;
+            $notrans = today()->format('Ymd') . str_pad($last_id_number + 1, 4, '0', STR_PAD_LEFT);
+
             $insertTransaksi = Transaksi::create([
                 'id' => $notrans,
                 'tanggal' => date('Y-m-d'),
@@ -70,9 +72,7 @@ class TransaksiController extends Controller
             DB::rollBack();
             return response()->json(['status' => false, 'message' => 'Pemesanan Gagal!', 'error' => $e->getMessage()]);
         }
-    } 
-
-    
+    }
 
     public function faktur($nofaktur)
     {

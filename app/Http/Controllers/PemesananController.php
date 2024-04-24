@@ -18,6 +18,11 @@ class PemesananController extends Controller
      */
     public function index()
     {
+        //
+    }
+
+    public function tampil()
+    {
         $data['jenis'] = Jenis::with(['menu'])->get();
 
         return view('pemesanan.index')->with($data);

@@ -17,7 +17,7 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $m->nama_menu }}</td>
                 <td>{{ $m->harga }}</td>
-                <td><img src="{{ asset('storage/' . $m->gambar) }}" alt="{{ $m->nama_menu }}" style="width: 50px; height: 50px;"></td>
+                <td><img src="{{ asset('storage/' . $m->gambar) }}" alt="{{ $m->nama_menu }}" style="width: 50px; height: 50px; object-fit: cover;"></td>
                 <td>{{ $m->keterangan }}</td>
                 <td>{{ $m->jenis->nama_jenis }}</td>
                 <td>

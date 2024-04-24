@@ -18,20 +18,19 @@ class AuthRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-    */
-    public function rules(): array
+     */
+    public function rules()
     {
         return [
             'email' => 'required',
             'password' => 'required'
         ];
     }
-    
     public function messages()
     {
-        return[
-            'email.required' => 'Email Harus Diisi',
-            'password.required' => 'Password Harus Diisi'
+        return [
+            'email' => 'Email harus diisi!',
+            'password' => 'Password harus diisi!'
         ];
     }
 }

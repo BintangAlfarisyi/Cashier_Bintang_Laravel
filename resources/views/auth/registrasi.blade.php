@@ -47,6 +47,22 @@
                                 </div>
 
                                 <div class="col-12">
+                                    <label for="alamat" class="form-label">Alamat</label>
+                                    <input type="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="alamat" required placeholder="Masukan Alamat Anda">
+                                    @error('alamat')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="ponsel" class="form-label">Ponsel</label>
+                                    <input type="ponsel" name="ponsel" class="form-control @error('ponsel') is-invalid @enderror" id="ponsel" required placeholder="Masukan Ponsel Anda">
+                                    @error('ponsel')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12">
                                     <label for="level" class="form-label">Jenis</label>
                                     <div class="input-group">
                                         <select class="form-select" id="level" name="level">

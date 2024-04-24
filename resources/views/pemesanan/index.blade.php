@@ -27,10 +27,10 @@
                     @foreach ($jenis as $j)
                     @foreach ($j->menu as $menu)
                     <div class='col-md-5'>
-                        <div class="card mb-3" style="cursor: pointer;">
+                        <div class="card mb-3">
                             <div class="card-body text-center">
                                 <h1 class="card-title mb-0">{{ $menu->nama_menu }}</h1>
-                                <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" style="width: 80px; height: 80px;" class="mb-3">
+                                <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" class="mb-3 img-kotak">
                                 <p class="card-text">Harga: {{ $menu->harga }}</p>
                                 <button class="btn-tambah btn btn-primary" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}" data-nama_menu="{{ $menu->nama_menu }}">Tambahkan</button>
                             </div>
@@ -134,16 +134,6 @@
                 return;
             }
 
-            // Swal.fire({
-            //     icon: "success",
-            //     title: "Pembayaran Berhasil",
-            //     text: "Pemesanan Sedang Diproses!",
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         window.location.reload();
-            //     }
-            // })
-
             $.ajax({
                 url: "{{ route('pemesanan-transaksi') }}",
                 method: "post",
@@ -191,17 +181,17 @@
                 orderedList.push(dataN);
                 let listOrder = `
                 <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${id}">
-                    <div class="d-flex flex-column w-100">
+                    <div class="d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="p-1">${menu_clicked}</h5>
                             <button type="button" class="btn-close remove-item" aria-label="Close"></button>
                         </div>
                         <div class="d-flex align-items-center">
-                            <div class="me-5">
+                            <div class="me-4">
                                 <p class="mb-2">Harga</p>
                                 <h5 class="small">Rp.${harga}</h5>
                             </div>
-                            <div class="d-flex align-items-center border rounded me-5 mt-4">
+                            <div class="d-flex align-items-center border rounded me-4 mt-4">
                                 <button class="btn-dec border-0 ">-</button>
                                 <div class="qty-item border-0 small text-center px-2" contenteditable="false">1</div>
                                 <button class="btn-inc border-0 ">+</button>
@@ -216,7 +206,7 @@
                 $('.ordered-list').append(listOrder);
             }
             $('#total').html(`Rp.${sum()}`);
-        
+
         });
     });
 </script>
@@ -249,6 +239,7 @@
         top: 20px;
         right: 20px;
         transform: translate(50%, -50%);
+        font-size: 10px;
     }
 
     .btn-dec,
@@ -264,5 +255,11 @@
 
     .card-title {
         font-size: 17px !important;
+    }
+
+    .img-kotak {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
     }
 </style>
