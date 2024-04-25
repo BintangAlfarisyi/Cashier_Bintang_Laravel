@@ -7,11 +7,11 @@ use App\Models\Jenis;
 use App\Http\Requests\StoreJenisRequest;
 use App\Http\Requests\UpdateJenisRequest;
 use App\Imports\JenisImport;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use PDOException;
 
@@ -106,9 +106,11 @@ class JenisController extends Controller
 
     public function importData(Request $request)
     {
+        $file = $request->file('import');
 
-        Excel::import(new JenisImport, $request->import);
-        return redirect()->back()->with('success', 'Data berhasil di import');
+        Excel::import(new JenisImport, $file, \Maatwebsite\Excel\Excel::XLSX);
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
 
     // public function hapusJenis($jenis_id)

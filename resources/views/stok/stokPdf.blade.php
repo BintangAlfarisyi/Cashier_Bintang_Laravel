@@ -2,14 +2,16 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Nama Jenis</th>
+            <th>Menu Id</th>
+            <th>Jumlah</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($data as $index => $j)
         <tr>
             <td>{{ $index + 1 }}</td>
-            <td>{{ $j->nama_jenis }}</td>
+            <td>{{ $j->menu_id }}</td>
+            <td>{{ $j->jumlah }}</td>
         </tr>
         @endforeach
     </tbody>

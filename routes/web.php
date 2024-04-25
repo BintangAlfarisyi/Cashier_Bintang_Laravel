@@ -14,6 +14,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\RegsitrasiController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\TentangController;
@@ -39,8 +40,8 @@ Route::get('/login', [UserController::class, 'index'])->name('login');
 Route::post('/login/cek', [UserController::class, 'cekLogin'])->name('cekLogin');
 
 // Registrasi
-// Route::get('/registrasi', [UserController::class, 'registrasi'])->name('registrasi');
-// Route::post('/registrasi', [UserController::class, 'register']);
+Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
+Route::post('/registrasi', [RegistrasiController::class, 'register']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index']);
@@ -50,18 +51,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     // Export
-    Route::get('export/menu', [MenuController::class, 'generateexcel'])->name('exportExcelMenu');
-    Route::get('generate/menu', [MenuController::class, 'generatePdf'])->name('exportPdfMenu');
+    Route::get('export/kategori', [KategoriController::class, 'generateexcel'])->name('exportExcelKategori');
+    Route::get('generate/kategori', [KategoriController::class, 'generatepdf'])->name('exportPdfKategori');
     Route::get('export/jenis', [JenisController::class, 'generateexcel'])->name('exportExcelJenis');
     Route::get('generate/jenis', [JenisController::class, 'generatepdf'])->name('exportPdfJenis');
+    Route::get('export/menu', [MenuController::class, 'generateexcel'])->name('exportExcelMenu');
+    Route::get('generate/menu', [MenuController::class, 'generatePdf'])->name('exportPdfMenu');
+    Route::get('export/stok', [StokController::class, 'generateexcel'])->name('exportExcelStok');
+    Route::get('generate/stok', [StokController::class, 'generatePdf'])->name('exportPdfStok');
     Route::get('export/produk', [ProdukController::class, 'generateexcel'])->name('exportExcelProduk');
     Route::get('generate/produk', [ProdukController::class, 'generatepdf'])->name('exportPdfProduk');
     Route::get('export/pegawai', [PegawaiController::class, 'generateexcel'])->name('exportExcelPegawai');
     Route::get('generate/pegawai', [PegawaiController::class, 'generatepdf'])->name('exportPdfPegawai');
 
     // Import
+    Route::post('kategori/import', [KategoriController::class, 'importData'])->name('importKategori');
     Route::post('jenis/import', [JenisController::class, 'importData'])->name('importJenis');
     Route::post('menu/import', [MenuController::class, 'importData'])->name('importMenu');
+    Route::post('stok/import', [StokController::class, 'importData'])->name('importStok');
     Route::post('produk/import', [ProdukController::class, 'importData'])->name('importProduk');
     Route::post('pegawai/import', [PegawaiController::class, 'importData'])->name('importPegawai');
 
@@ -86,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/pegawai', PegawaiController::class);
     });
-    
+
     // kasir
     Route::group(['middleware' => ['cekUserLogin:2']], function () {
         Route::get('/pemesanan', [PemesananController::class, 'tampil']);

@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="{{ asset('storage/' . Auth::user()->gambar) }}" alt="Profile" class="rounded-circle">
+                        <!-- <img src="{{ asset('storage/' . Auth::user()->gambar) }}" alt="Profile" class="rounded-circle"> -->
                         <h2 class="mb-2">{{ Auth::user()->name }}</h2>
                         @if(Auth::check())
                         @if(Auth::user()->level == 1)

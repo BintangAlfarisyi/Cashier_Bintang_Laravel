@@ -36,10 +36,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormStok">
-                    <i class="bi bi-plus"></i> Tambah Stok
-                </button>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormStok">
+                        <i class="bi bi-plus"></i> Tambah Stok
+                    </button>
+                    <div class="right">
+                        <a href="{{ route('exportExcelStok') }}" class="btn btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export XSLX
+                        </a>
+                        <button href="{{ route('importStok') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#ImportStok">
+                            <i class="bi bi-file-earmark-excel"></i> Import XSLX
+                        </button>
+                        <a href="{{ route('exportPdfStok') }}" class="btn btn-danger" target="_blank">
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </a>
+                    </div>
+                </div>
                 @include('stok.data')
             </div>
         </div>
@@ -105,7 +117,7 @@
                 modal.find('form').attr('action', '{{ url("stok") }}')
             }
         })
-        
+
         $('#modalFormStok').on('shown.bs.modal', function() {
             $('#menu_id').delay(1000).focus().select();
         })

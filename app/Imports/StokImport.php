@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\Jenis;
+use App\Models\Stok;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class JenisImport implements ToCollection, WithHeadingRow
+class StokImport implements ToCollection, WithHeadingRow
 {
     /**
      * @param array $row
@@ -17,8 +17,9 @@ class JenisImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            Jenis::create([
-                'nama_jenis' => $row['nama_jenis'],
+            Stok::create([
+                'menu_id' => $row['menu_id'],
+                'jumlah' => $row['jumlah'],
             ]);
         }
     }

@@ -61,6 +61,12 @@
       border: 1px solid #ddd;
       border-radius: 5px;
     }
+
+    nav ol li{
+      font-size: 12px;
+      font-weight: normal;
+      font-family: "Montserrat", sans-serif;
+    }
   </style>
 
   @stack('style')

@@ -126,11 +126,12 @@ class MenuController extends Controller
         $menu = Menu::all();
 
         foreach ($menu as $m) {
-            $m->nama_menu = "gambar_" . $m->nama_menu;
+            $m->gambar = "gambar_" . $m->nama_menu;
         }
 
-        $pdf = Pdf::loadView('menu.data', compact('menu'));
-        return $pdf->download('menu.pdf');
+        $pdf = PDF::loadView('menu.data', compact('menu'));
+
+        return $pdf->stream('menu.pdf');
     }
 
     public function importData(Request $request)

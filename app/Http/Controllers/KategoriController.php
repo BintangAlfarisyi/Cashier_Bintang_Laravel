@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KategoriExport;
 use App\Models\Kategori;
 use App\Http\Requests\StoreKategoriRequest;
 use App\Http\Requests\UpdateKategoriRequest;
+use App\Imports\KategoriImport;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 use PDOException;
 
 class KategoriController extends Controller
@@ -83,5 +88,28 @@ class KategoriController extends Controller
         $kategori->delete();
 
         return redirect('kategori')->with('success', 'Delete Data Berhasil!');
+    }
+
+    public function generateExcel()
+    {
+        $date = date('Y-m-d');
+        return Excel::download(new KategoriExport, $date . 'kategori.xlsx');
+    }
+
+    public function generatepdf()
+    {
+        $data = Kategori::all();
+
+        $pdf = PDF::loadView('kategori.kategoriPdf', compact('data'));
+        return $pdf->stream('kategori.pdf');
+    }
+
+    public function importData(Request $request)
+    {
+        $file = $request->file('import');
+
+        Excel::import(new KategoriImport, $file, \Maatwebsite\Excel\Excel::XLSX); 
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
 }

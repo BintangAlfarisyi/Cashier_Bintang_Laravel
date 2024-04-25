@@ -1,12 +1,12 @@
-<div class="modal fade" id="importJenis" tabindex="-1" aria-labelledby="importJenisModalLabel" aria-hidden="true">
+<div class="modal fade" id="importKategori" tabindex="-1" aria-labelledby="importKategoriModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="importJenisModalLabel">Import Data Jenis</h5>
+                <h5 class="modal-title" id="importKategoriModalLabel">Import Data Kategori</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ url('jenis/import') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url('kategori/import') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="import" class="form-label">File Excel</label>

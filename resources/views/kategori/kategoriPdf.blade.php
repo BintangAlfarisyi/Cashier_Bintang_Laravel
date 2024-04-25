@@ -2,14 +2,14 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Nama Jenis</th>
+            <th>Nama Kategori</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($data as $index => $j)
         <tr>
             <td>{{ $index + 1 }}</td>
-            <td>{{ $j->nama_jenis }}</td>
+            <td>{{ $j->nama_kategori }}</td>
         </tr>
         @endforeach
     </tbody>

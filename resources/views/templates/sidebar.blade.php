@@ -24,13 +24,23 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/stok">
+                        <i class="bi bi-circle"></i><span>Stok</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/menu">
                         <i class="bi bi-circle"></i><span>Menu</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/stok">
-                        <i class="bi bi-circle"></i><span>Stok</span>
+                    <a href="/meja">
+                        <i class="bi bi-circle"></i><span>Meja</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/pelanggan">
+                        <i class="bi bi-circle"></i><span>Pelanggan</span>
                     </a>
                 </li>
             </ul>
