@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalFormPelangganLabel">Tambah Data</h5>
-                <button type="button" class="btn-close" style="font-size: 2rem;" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post" action="pelanggan" enctype="multipart/form-data">
@@ -18,8 +18,8 @@
                         <input type="text" class="form-control" id="email" name="email">
                     </div>
                     <div class="mb-3">
-                        <label for="telpon" class="form-label">Telpon</label>
-                        <input type="number" class="form-control" id="telpon" name="telpon">
+                        <label for="ponsel" class="form-label">Ponsel</label>
+                        <input type="number" class="form-control" id="ponsel" name="ponsel">
                     </div>
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat</label>
@@ -34,3 +34,5 @@
         </div>
     </div>
 </div>
+
+@include('pelanggan.import')

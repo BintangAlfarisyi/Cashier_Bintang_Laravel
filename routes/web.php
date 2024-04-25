@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/contact', [ContactController::class, 'index']);
     Route::get('/profile', [ProfileController::class, 'tampil']);
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/change-password', [ProfileCOntroller::class, 'changePassword']);
 
     // Export
     Route::get('export/kategori', [KategoriController::class, 'generateexcel'])->name('exportExcelKategori');
@@ -59,6 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('generate/menu', [MenuController::class, 'generatePdf'])->name('exportPdfMenu');
     Route::get('export/stok', [StokController::class, 'generateexcel'])->name('exportExcelStok');
     Route::get('generate/stok', [StokController::class, 'generatePdf'])->name('exportPdfStok');
+    Route::get('export/meja', [MejaController::class, 'generateexcel'])->name('exportExcelMeja');
+    Route::get('generate/meja', [MejaController::class, 'generatePdf'])->name('exportPdfMeja');
+    Route::get('export/pelanggan', [PelangganController::class, 'generateexcel'])->name('exportExcelPelanggan');
+    Route::get('generate/pelanggan', [PelangganController::class, 'generatePdf'])->name('exportPdfPelanggan');
     Route::get('export/produk', [ProdukController::class, 'generateexcel'])->name('exportExcelProduk');
     Route::get('generate/produk', [ProdukController::class, 'generatepdf'])->name('exportPdfProduk');
     Route::get('export/pegawai', [PegawaiController::class, 'generateexcel'])->name('exportExcelPegawai');
@@ -69,6 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('jenis/import', [JenisController::class, 'importData'])->name('importJenis');
     Route::post('menu/import', [MenuController::class, 'importData'])->name('importMenu');
     Route::post('stok/import', [StokController::class, 'importData'])->name('importStok');
+    Route::post('meja/import', [MejaController::class, 'importData'])->name('importMeja');
+    Route::post('pelanggan/import', [PelangganController::class, 'importData'])->name('importPelanggan');
     Route::post('produk/import', [ProdukController::class, 'importData'])->name('importProduk');
     Route::post('pegawai/import', [PegawaiController::class, 'importData'])->name('importPegawai');
 

@@ -24,7 +24,7 @@ class StorePelangganRequest extends FormRequest
         return [
             'nama_pelanggan' => 'required',
             'email' => 'required',
-            'telpon' => 'required',
+            'ponsel' => 'required',
             'alamat' => 'required'
         ];
     }
@@ -34,7 +34,7 @@ class StorePelangganRequest extends FormRequest
         return [
             'nama_pelanggan.required' => 'Data Nama Pelanggan belum diisi!',
             'email.required' => 'Data Email belum diisi!',
-            'telpon.required' => 'Data Telpon belum diisi!',
+            'ponsel.required' => 'Data Ponsel belum diisi!',
             'alamat.required' => 'Data Alamat belum diisi!'
         ];
     }

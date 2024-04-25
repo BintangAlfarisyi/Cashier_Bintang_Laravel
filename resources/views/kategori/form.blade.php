@@ -23,4 +23,4 @@
     </div>
 </div>
 
-@include('jenis.import')
+@include('kategori.import')

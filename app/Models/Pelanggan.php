@@ -10,5 +10,5 @@ class Pelanggan extends Model
     use HasFactory;
 
     protected $table = 'pelanggan';
-    protected $fillable = ['nama_pelanggan', 'email', 'telpon', 'alamat'];
+    protected $fillable = ['nama_pelanggan', 'email', 'ponsel', 'alamat'];
 }

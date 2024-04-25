@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PelangganExport;
 use App\Models\Pelanggan;
 use App\Http\Requests\StorePelangganRequest;
 use App\Http\Requests\UpdatePelangganRequest;
+use App\Imports\PelangganImport;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 use PDOException;
 
 class PelangganController extends Controller
@@ -27,7 +32,6 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -54,7 +58,6 @@ class PelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
-        
     }
 
     /**
@@ -62,7 +65,6 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        
     }
 
     /**
@@ -83,5 +85,28 @@ class PelangganController extends Controller
         $pelanggan->delete();
 
         return redirect('pelanggan')->with('success', 'Delete Data Berhasil!');
+    }
+
+    public function generateExcel()
+    {
+        $date = date('Y-m-d');
+        return Excel::download(new PelangganExport, $date . 'pelanggan.xlsx');
+    }
+
+    public function generatepdf()
+    {
+        $data = Pelanggan::all();
+
+        $pdf = PDF::loadView('pelanggan.pelangganPdf', compact('data'));
+        return $pdf->stream('pelanggan.pdf');
+    }
+
+    public function importData(Request $request)
+    {
+        $file = $request->file('import');
+
+        Excel::import(new PelangganImport, $file, \Maatwebsite\Excel\Excel::XLSX);
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
 }

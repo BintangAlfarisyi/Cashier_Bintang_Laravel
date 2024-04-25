@@ -141,34 +141,39 @@
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
                                 <!-- Change Password Form -->
-                                <form>
+                                <form method="POST" action="{{ url('/change-password') }}">
+                                    @csrf
 
-                                    <div class="row mb-3">
-                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="password" type="password" class="form-control" id="currentPassword">
-                                        </div>
+                                    <!-- Current Password -->
+                                    <div class="form-group">
+                                        <label for="current_password">Current Password</label>
+                                        <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required>
+                                        @error('current_password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                        </div>
+                                    <!-- New Password -->
+                                    <div class="form-group">
+                                        <label for="new_password">New Password</label>
+                                        <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" required>
+                                        @error('new_password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                        </div>
+                                    <!-- Confirm New Password -->
+                                    <div class="form-group mt-3">
+                                        <label for="new_password_confirmation">Confirm New Password</label>
+                                        <input id="new_password_confirmation" type="password" class="form-control" name="new_password_confirmation" required>
                                     </div>
 
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Change Password</button>
-                                    </div>
-                                </form><!-- End Change Password Form -->
-
+                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                </form>
                             </div>
 
                         </div><!-- End Bordered Tabs -->

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('menu_id');
             $table->Integer('jumlah');
             $table->timestamps();
+
+            $table->foreign('menu_id')->references('id')->on('menu')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

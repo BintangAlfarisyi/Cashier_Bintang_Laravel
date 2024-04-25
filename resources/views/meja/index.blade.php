@@ -19,7 +19,7 @@
     <section class="section dashboard">
         <div class="row">
             <div class="card-body">
-                
+
                 <!-- Alert Success -->
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,10 +40,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMeja">
-                    <i class="bi bi-plus"></i> Tambah Meja
-                </button>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormMeja">
+                        <i class="bi bi-plus"></i> Tambah Meja
+                    </button>
+                    <div class="right">
+                        <a href="{{ route('exportExcelMeja') }}" class="btn btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export XSLX
+                        </a>
+                        <button href="{{ route('importMeja') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#ImportMeja">
+                            <i class="bi bi-file-earmark-excel"></i> Import XSLX
+                        </button>
+                        <a href="{{ route('exportPdfMeja') }}" class="btn btn-danger" target="_blank">
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </a>
+                    </div>
+                </div>
                 @include('meja.data')
             </div>
         </div>
@@ -112,7 +124,7 @@
                 modal.find('form').attr('action', '{{ url("meja") }}')
             }
         })
-        
+
         $('#modalFormMeja').on('shown.bs.modal', function() {
             $('#no_meja').delay(1000).focus().select();
         })

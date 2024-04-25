@@ -25,8 +25,6 @@ class KategoriExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             return [
                 $index + 1,
                 $kategori->nama_kategori,
-                $kategori->created_at,
-                $kategori->updated_at,
             ];
         });
     }
@@ -41,12 +39,10 @@ class KategoriExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
                 // Set ukuran lebar kolom
                 $event->sheet->getColumnDimension('A')->setWidth(5); // No
                 $event->sheet->getColumnDimension('B')->setAutoSize(true); // Nama Kategori
-                $event->sheet->getColumnDimension('C')->setAutoSize(true); // Created At
-                $event->sheet->getColumnDimension('D')->setAutoSize(true); // Updated At
 
                 // Judul di atas data
                 $event->sheet->insertNewRowBefore(1, 2);
-                $event->sheet->mergeCells('A1:D1');
+                $event->sheet->mergeCells('A1:B1');
                 $event->sheet->setCellValue('A1', "DATA KATEGORI");
 
                 // Style judul
@@ -60,7 +56,7 @@ class KategoriExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
                 ]);
 
                 // Style border untuk seluruh data
-                $event->sheet->getStyle('A3:D' . $event->sheet->getHighestRow())->applyFromArray([
+                $event->sheet->getStyle('A3:B' . $event->sheet->getHighestRow())->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
@@ -80,8 +76,6 @@ class KategoriExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
         return [
             'No',
             'Nama Kategori',
-            'Created At',
-            'Updated At',
         ];
     }
 
@@ -94,7 +88,7 @@ class KategoriExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             // Style untuk baris judul
             1 => ['font' => ['bold' => true]],
             // Style untuk judul "DATA JENIS"
-            'A1:D1' => [
+            'A1:B1' => [
                 'fill' => [
                     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                     'startColor' => ['rgb' => '17cfb6'],

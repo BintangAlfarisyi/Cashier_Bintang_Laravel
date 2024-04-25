@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\Kategori;
+use App\Models\Meja;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class KategoriImport implements ToCollection, WithHeadingRow
+class MejaImport implements ToCollection, WithHeadingRow
 {
     /**
      * @param array $row
@@ -17,8 +17,10 @@ class KategoriImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            Kategori::create([
-                'nama_kategori' => $row['nama_kategori'],
+            Meja::create([
+                'no_meja' => $row['no_meja'],
+                'kapasitas' => $row['kapasitas'],
+                'status' => $row['status'],
             ]);
         }
     }
