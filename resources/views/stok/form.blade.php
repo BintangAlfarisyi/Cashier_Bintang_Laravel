@@ -10,8 +10,16 @@
                     @csrf
                     <div id="method"></div>
                     <div class="mb-3">
-                        <label for="menu_id" class="form-label">Menu Id</label>
-                        <input type="number" class="form-control" id="menu_id" name="menu_id">
+                        <label for="menu_id" class="form-label">Menu</label>
+                        <div class="input-group">
+                            <select class="form-select" id="menu_id" name="menu_id">
+                                <option selected disabled>Pilih Menu</option>
+                                @foreach($menu as $m)
+                                <option value="{{ $m->id }}">{{ $m->nama_menu }}</option>
+                                @endforeach
+                            </select>
+                            <label class="input-group-text" for="menu_id"><i class="fas fa-caret-down"></i></label>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="jumlah" class="form-label">Jumlah</label>

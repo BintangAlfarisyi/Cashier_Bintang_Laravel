@@ -26,16 +26,23 @@
                 <div class="row w-full p-3">
                     @foreach ($jenis as $j)
                     @foreach ($j->menu as $menu)
+                    @foreach ($menu->stok as $stok)
                     <div class='col-md-5'>
                         <div class="card mb-3">
                             <div class="card-body text-center">
                                 <h1 class="card-title mb-0">{{ $menu->nama_menu }}</h1>
                                 <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" class="mb-3 img-kotak">
-                                <p class="card-text">Harga: {{ $menu->harga }}</p>
+                                <p class="card-text m-0" style="font-size: 20px;">Harga: {{ $menu->harga }}</p>
+                                @if ($stok->jumlah > 0)
+                                <p class="card-text" style="font-size: 13px;">Stok: {{ $stok->jumlah }}</p>
                                 <button class="btn-tambah btn btn-primary" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}" data-nama_menu="{{ $menu->nama_menu }}">Tambahkan</button>
+                                @else
+                                <p class="card-text" style="font-size: 13px; color: red;">Stok habis</p>
+                                @endif
                             </div>
                         </div>
                     </div>
+                    @endforeach
                     @endforeach
                     @endforeach
                 </div>

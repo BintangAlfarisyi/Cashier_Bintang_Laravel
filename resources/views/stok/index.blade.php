@@ -26,8 +26,10 @@
                 </div>
                 @endif
 
+                <!-- Alert Ketika ada kesalahan -->
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle"></i> Terdapat beberapa masalah:
                     <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -105,13 +107,13 @@
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#menu_id').val(menu_id)
+                modal.find('#menu_id').val(menu_id).prop('disabled', true)
                 modal.find('#jumlah').val(jumlah)
                 modal.find('#method').html('@method("PUT")')
                 modal.find('form').attr('action', `{{ url('stok') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#menu_id').val('')
+                modal.find('#menu_id').val('').prop('disabled', false)
                 modal.find('#jumlah').val('')
                 modal.find('#method').html('')
                 modal.find('form').attr('action', '{{ url("stok") }}')

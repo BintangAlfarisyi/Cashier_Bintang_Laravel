@@ -12,7 +12,7 @@
             @foreach ($stok as $index => $s)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $s->menu_id }}</td>
+                <td>{{ $s->menu->nama_menu }}</td>
                 <td>{{ $s->jumlah }}</td>
                 <td>
                     <button type="button" class="btn btn-success btn-size" data-bs-toggle="modal" data-bs-target="#modalFormStok" data-mode="edit" data-id="{{ $s->id }}" data-menu_id="{{ $s->menu_id }}" data-jumlah="{{ $s->jumlah }}">

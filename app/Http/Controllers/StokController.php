@@ -7,6 +7,7 @@ use App\Models\Stok;
 use App\Http\Requests\StoreStokRequest;
 use App\Http\Requests\UpdateStokRequest;
 use App\Imports\StokImport;
+use App\Models\Menu;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,10 @@ class StokController extends Controller
      */
     public function index()
     {
-        $data['stok'] = Stok::orderBy('created_at', 'ASC')->get();
+        $stok = Stok::with('menu')->get();
+        $menu = Menu::all();
 
-        return view('stok.index')->with($data);
+        return view('stok.index', compact('menu', 'stok'));
     }
 
     /**
@@ -32,7 +34,6 @@ class StokController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -41,6 +42,10 @@ class StokController extends Controller
     public function store(StoreStokRequest $request)
     {
         try {
+            $isStok = Stok::where('menu_id', $request->menu_id)->first();
+            if (isset($isStok)) {
+                return redirect()->back()->withErrors(['Stok sudah ada']);
+            }
             DB::beginTransaction(); #Mulai Transaksi
             Stok::create($request->all()); #Query Input Ke Table
 
@@ -59,7 +64,6 @@ class StokController extends Controller
      */
     public function show(Stok $stok)
     {
-        
     }
 
     /**
@@ -67,7 +71,6 @@ class StokController extends Controller
      */
     public function edit(Stok $stok)
     {
-        
     }
 
     /**
