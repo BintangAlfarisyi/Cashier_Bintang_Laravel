@@ -53,7 +53,7 @@
                         <button href="{{ route('importMenu') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#importMenu">
                             <i class="bi bi-file-earmark-excel"></i> Import XSLX
                         </button>
-                        <a href="{{ route('exportPdfMenu') }}" class="btn btn-danger">
+                        <a href="{{ route('exportPdfMenu') }}" class="btn btn-danger" target="_blank">
                             <i class="bi bi-file-earmark-pdf"></i> Export PDF
                         </a>
                     </div>
