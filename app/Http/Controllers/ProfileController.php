@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         // Validate the form data
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'ponsel' => 'required|string|max:255',
@@ -28,30 +28,18 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // Update user attributes
-        $user->name = $request->input('name');
-        $user->alamat = $request->input('alamat');
-        $user->ponsel = $request->input('ponsel');
-        $user->email = $request->input('email');
+        $user->name = $validatedData['name'];
+        $user->alamat = $validatedData['alamat'];
+        $user->ponsel = $validatedData['ponsel'];
+        $user->email = $validatedData['email'];
 
-        return redirect()->back()->with('success', 'Profile updated successfully');
-    }
-
-    public function changePassword(Request $request)
-    {
-        $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
-
-        $user = Auth::user();
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->withErrors(['current_password' => 'Password tidak sesuai.']);
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan saat menyimpan, dd pesan kesalahan
+            dd($e->getMessage());
         }
 
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-
-        return redirect()->back()->with('success', 'Password Berhasil diubah!');
+        return redirect()->back()->with('success', 'Profile updated successfully');
     }
 }

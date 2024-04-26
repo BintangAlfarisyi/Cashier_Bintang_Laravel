@@ -142,13 +142,13 @@
                             <div class="tab-pane fade pt-3" id="profile-change-password">
                                 <!-- Change Password Form -->
                                 <form method="POST" action="{{ url('/change-password') }}">
-                                    @csrf
+                                    @csrf <!-- CSRF protection -->
 
                                     <!-- Current Password -->
                                     <div class="form-group">
-                                        <label for="current_password">Current Password</label>
+                                        <label for="current_password">Password Lama</label>
                                         <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required>
-                                        @error('current_password')
+                                        @error('current_password') <!-- Display error message if current password validation fails -->
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -157,9 +157,9 @@
 
                                     <!-- New Password -->
                                     <div class="form-group">
-                                        <label for="new_password">New Password</label>
+                                        <label for="new_password">Password Baru</label>
                                         <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" required>
-                                        @error('new_password')
+                                        @error('new_password') <!-- Display error message if new password validation fails -->
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -168,12 +168,19 @@
 
                                     <!-- Confirm New Password -->
                                     <div class="form-group mt-3">
-                                        <label for="new_password_confirmation">Confirm New Password</label>
+                                        <label for="new_password_confirmation">Konfirmasi Password Baru</label>
                                         <input id="new_password_confirmation" type="password" class="form-control" name="new_password_confirmation" required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                    <button type="submit" class="btn btn-primary mt-3">Ubah Password</button>
                                 </form>
+
+                                <!-- Display success or error message -->
+                                @if(session('success'))
+                                <div class="alert alert-success mt-3" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                                @endif
                             </div>
 
                         </div><!-- End Bordered Tabs -->

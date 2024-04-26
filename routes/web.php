@@ -39,17 +39,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [UserController::class, 'index'])->name('login');
 Route::post('/login/cek', [UserController::class, 'cekLogin'])->name('cekLogin');
 
-// Registrasi
-Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
-Route::post('/registrasi', [RegistrasiController::class, 'register']);
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/tentang', [TentangController::class, 'index']);
     Route::get('/contact', [ContactController::class, 'index']);
     Route::get('/profile', [ProfileController::class, 'tampil']);
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/change-password', [ProfileCOntroller::class, 'changePassword']);
+    Route::post('/change-password', [ProfileController::class, 'changePassword']);
+
+    Route::resource('/pegawai', PegawaiController::class);
+    Route::get('export/pegawai', [PegawaiController::class, 'generateexcel'])->name('exportExcelPegawai');
+    Route::get('generate/pegawai', [PegawaiController::class, 'generatepdf'])->name('exportPdfPegawai');
+    Route::post('pegawai/import', [PegawaiController::class, 'importData'])->name('importPegawai');
 
     // Export
     Route::get('export/kategori', [KategoriController::class, 'generateexcel'])->name('exportExcelKategori');
@@ -66,8 +67,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('generate/pelanggan', [PelangganController::class, 'generatePdf'])->name('exportPdfPelanggan');
     Route::get('export/produk', [ProdukController::class, 'generateexcel'])->name('exportExcelProduk');
     Route::get('generate/produk', [ProdukController::class, 'generatepdf'])->name('exportPdfProduk');
-    Route::get('export/pegawai', [PegawaiController::class, 'generateexcel'])->name('exportExcelPegawai');
-    Route::get('generate/pegawai', [PegawaiController::class, 'generatepdf'])->name('exportPdfPegawai');
 
     // Import
     Route::post('kategori/import', [KategoriController::class, 'importData'])->name('importKategori');
@@ -77,7 +76,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('meja/import', [MejaController::class, 'importData'])->name('importMeja');
     Route::post('pelanggan/import', [PelangganController::class, 'importData'])->name('importPelanggan');
     Route::post('produk/import', [ProdukController::class, 'importData'])->name('importProduk');
-    Route::post('pegawai/import', [PegawaiController::class, 'importData'])->name('importPegawai');
 
     // logout
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
@@ -95,10 +93,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/meja', MejaController::class);
         Route::resource('/produk', ProdukController::class);
 
+        // Registrasi
+        Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
+        Route::post('/registrasi', [RegistrasiController::class, 'register']);
+        Route::delete('/registrasi', [RegistrasiController::class, 'destroy'])->name('registrasi.destroy');
+
         Route::resource('/karyawan', KaryawanController::class);
         Route::post('/karyawan/update-status', [KaryawanController::class, 'update'])->name('karyawan.update-status');
-
-        Route::resource('/pegawai', PegawaiController::class);
     });
 
     // kasir

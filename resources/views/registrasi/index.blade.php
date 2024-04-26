@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Jenis</h1>
+        <h1>Buat Akun</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/jenis">Jenis</a></li>
+                <li class="breadcrumb-item">Pages</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/registrasi">Buat Akun</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -40,24 +40,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-                
-                <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormJenis">
-                        <i class="bi bi-plus"></i> Tambah Jenis
-                    </button>
-                    <div class="right">
-                        <a href="{{ route('exportExcelJenis') }}" class="btn btn-success">
-                            <i class="bi bi-file-earmark-excel"></i> Export XSLX
-                        </a>
-                        <button href="{{ route('importJenis') }}" type="button" class="btn btn-success btn-import" data-bs-toggle="modal" data-bs-target="#ImportJenis">
-                            <i class="bi bi-file-earmark-excel"></i> Import XSLX
-                        </button>
-                        <a href="{{ route('exportPdfJenis') }}" class="btn btn-danger" target="_blank">
-                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
-                        </a>
-                    </div>
-                </div>
-                @include('jenis.data')
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormAkun">
+                    <i class="bi bi-plus"></i> Buat Akun
+                </button>
+                @include('registrasi.data')
             </div>
         </div>
     </section>
@@ -65,7 +51,7 @@
 </main><!-- End #main -->
 @endsection
 
-@include('jenis.form')
+@include('registrasi.form')
 
 @push('script')
 <script>
@@ -95,32 +81,6 @@
                     $(e.target).closest('form').submit()
                 else swal.close()
             })
-        })
-
-
-        // Update or input
-        $('#modalFormJenis').on('show.bs.modal', function(e) {
-            const btn = $(e.relatedTarget)
-            const modal = $(this)
-            const mode = btn.data('mode')
-            const id = btn.data('id')
-            const nama = btn.data('nama_jenis')
-            const kategori_id = btn.data('kategori_id')
-
-            // Membedakan Input Atau Edit
-            if (mode === 'edit') {
-                modal.find('.modal-title').text('Edit Data')
-                modal.find('#nama_jenis').val(nama)
-                modal.find('#kategori_id').val(kategori_id)
-                modal.find('#method').html('@method("PUT")')
-                modal.find('form').attr('action', `{{ url('jenis') }}/${id}`)
-            } else {
-                modal.find('.modal-title').text('Tambah Data')
-                modal.find('#nama_jenis').val('')
-                modal.find('#kategori_id').val('')
-                modal.find('#method').html('')
-                modal.find('form').attr('action', '{{ url("jenis") }}')
-            }
         })
 
         $('#modalFormJenis').on('shown.bs.modal', function() {

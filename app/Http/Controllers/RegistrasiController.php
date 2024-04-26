@@ -12,7 +12,8 @@ class RegistrasiController extends Controller
 {
     public function registrasi()
     {
-        return view('auth.registrasi');
+        $user = User::all();
+        return view('registrasi.index', ['user' => $user]);
     }
 
     public function register(Request $request)
@@ -42,5 +43,12 @@ class RegistrasiController extends Controller
 
         // Redirect ke halaman login dengan pesan sukses
         return redirect('/login')->with('success', 'Akun Anda telah berhasil dibuat. Silakan login.');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect('registrasi')->with('success', 'Delete Data Berhasil!');
     }
 }

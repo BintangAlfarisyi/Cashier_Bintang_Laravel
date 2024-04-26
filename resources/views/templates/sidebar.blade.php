@@ -8,6 +8,7 @@
             </a>
         </li><!-- End Dashboard Nav -->
 
+        @if(Auth::user()->level == 1)
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -45,15 +46,18 @@
                 </li>
             </ul>
         </li><!-- End Tables Nav -->
+        @endif
 
         <li class="nav-heading">Pages</li>
-
+        
+        @if(Auth::user()->level == 2)
         <li class="nav-item">
             <a class="nav-link collapsed" href="/pemesanan">
                 <i class="bi bi-cart"></i>
                 <span>Pemesanan</span>
             </a>
         </li><!-- End Pemesanan Page Nav -->
+        @endif
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/pegawai">
@@ -68,6 +72,15 @@
                 <span>Produk Titipan</span>
             </a>
         </li><!-- End Produk Titipan Page Nav -->
+
+        @if(Auth::user()->level == 1)
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/registrasi">
+                <i class="bi bi-person"></i>
+                <span>Buat Akun</span>
+            </a>
+        </li><!-- End Buat Akun Page Nav -->
+        @endif
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/contact">
