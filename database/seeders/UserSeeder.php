@@ -16,30 +16,21 @@ class UserSeeder extends Seeder
 
         $User = [
             [
-                'name' => 'Administrator',
-                'email' => 'admin@gmail.com',
-                'password' => bcrypt('a'),
+                'name' => 'Bintang Alfarisyi',
+                'email' => 'bntngal7@gmail.com',
+                'password' => bcrypt('Bintang12345'),
                 'level' => 1,
                 'alamat' => 'Pateken',
                 'ponsel' => "0895326146997",
             ],
 
             [
-                'name' => 'Kasir1',
-                'email' => 'kasir1@gmail.com',
-                'password' => bcrypt('a'),
+                'name' => 'Yanti Febriyanti',
+                'email' => 'yantif7@gmail.com',
+                'password' => bcrypt('Yanti12345'),
                 'level' => 2,
-                'alamat' => 'Pateken',
-                'ponsel' => "0895326146997",
-            ],
-
-            [
-                'name' => 'Kasir2',
-                'email' => 'kasir2@gmail.com',
-                'password' => bcrypt('a'),
-                'level' => 2,
-                'alamat' => 'Pateken',
-                'ponsel' => "0895326146997",
+                'alamat' => 'Gombong',
+                'ponsel' => "085871124255",
             ],
 
         ];

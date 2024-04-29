@@ -14,11 +14,11 @@
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
+                <!-- <li>
                     <a href="/kategori">
                         <i class="bi bi-circle"></i><span>Kategori</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="/jenis">
                         <i class="bi bi-circle"></i><span>Jenis</span>
@@ -35,6 +35,16 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/transaksi">
+                        <i class="bi bi-circle"></i><span>Transaksi</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/detail_transaksi">
+                        <i class="bi bi-circle"></i><span>Detail Transaksi</span>
+                    </a>
+                </li>
+                <!-- <li>
                     <a href="/meja">
                         <i class="bi bi-circle"></i><span>Meja</span>
                     </a>
@@ -43,7 +53,7 @@
                     <a href="/pelanggan">
                         <i class="bi bi-circle"></i><span>Pelanggan</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </li><!-- End Tables Nav -->
         @endif
@@ -59,19 +69,19 @@
         </li><!-- End Pemesanan Page Nav -->
         @endif
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link collapsed" href="/pegawai">
                 <i class="bi bi-calendar-check"></i>
                 <span>Absensi Kerja</span>
             </a>
-        </li><!-- End Absensi Page Nav -->
+        </li>End Absensi Page Nav -->
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link collapsed" href="/produk">
                 <i class="bi bi-box"></i>
                 <span>Produk Titipan</span>
             </a>
-        </li><!-- End Produk Titipan Page Nav -->
+        </li>End Produk Titipan Page Nav -->
 
         @if(Auth::user()->level == 1)
         <li class="nav-item">

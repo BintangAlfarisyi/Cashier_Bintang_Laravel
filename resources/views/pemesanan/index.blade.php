@@ -15,9 +15,9 @@
     <div class="container d-flex justify-content-between align-items-start p-3">
         <div class="item" style="flex-basis: 60%;">
             <div class="container">
-                <div class="jenis d-flex flex-row mb-2 m-0">
+                <div class="jenis d-flex flex-row mb-2 m-0" style="flex-wrap: wrap;">
                     @foreach($jenis as $j)
-                    <div class="form-check">
+                    <div class="form-check mb-2">
                         <input type="radio" class="btn-check" name="options-outlined" id="jenis_{{ $j->id }}" autocomplete="off">
                         <label class="btn btn-outline-primary" for="jenis_{{ $j->id }}">{{ $j->nama_jenis }}</label>
                     </div>
@@ -32,7 +32,7 @@
                             <div class="card-body text-center">
                                 <h1 class="card-title mb-0">{{ $menu->nama_menu }}</h1>
                                 <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" class="mb-3 img-kotak">
-                                <p class="card-text m-0" style="font-size: 20px;">Harga: {{ $menu->harga }}</p>
+                                <p class="card-t ext m-0" style="font-size: 20px;">Harga: {{ $menu->harga }}</p>
                                 @if ($stok->jumlah > 0)
                                 <p class="card-text" style="font-size: 13px;">Stok: {{ $stok->jumlah }}</p>
                                 <button class="btn-tambah btn btn-primary" data-harga="{{ $menu->harga }}" data-id="{{ $menu->id }}" data-nama_menu="{{ $menu->nama_menu }}">Tambahkan</button>

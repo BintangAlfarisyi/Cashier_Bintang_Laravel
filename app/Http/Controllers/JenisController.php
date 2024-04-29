@@ -93,7 +93,9 @@ class JenisController extends Controller
     public function generateExcel()
     {
         $date = date('Y-m-d');
-        return Excel::download(new JenisExport, $date . 'jenis.xlsx');
+        $jenisExport = new JenisExport;
+
+        return Excel::download($jenisExport, $date . 'jenis.xlsx');
     }
 
     public function generatepdf()
@@ -112,28 +114,4 @@ class JenisController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil diimpor');
     }
-
-    // public function hapusJenis($jenis_id)
-    // {
-    //     // Cari jenis berdasarkan ID
-    //     $jeni = Jenis::find($jenis_id);
-
-    //     if ($jeni) {
-    //         // Temukan semua menu yang terkait dengan jenis yang akan dihapus
-    //         $menus = Menu::where('jenis_id', $jenis_id)->get();
-
-    //         // Hapus semua menu yang terkait
-    //         foreach ($menus as $menu) {
-    //             $menu->delete();
-    //         }
-
-    //         // Hapus jenis itu sendiri
-    //         $jeni->delete();
-
-    //         return redirect('jenis')->with('success', 'Data berhasil dihapus beserta semua menu yang terkait.');
-    //     } else {
-    //         return redirect('jenis')->with('error', 'Jenis tidak ditemukan.');
-    //     }
-    // }
-
 }

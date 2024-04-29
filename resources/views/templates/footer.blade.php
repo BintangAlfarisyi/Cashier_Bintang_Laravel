@@ -10,7 +10,7 @@
 <!-- Vendor JS Files -->
 <script src="{{ asset('admin') }}/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="{{ asset('admin') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('admin') }}/vendor/chart.js/chart.umd.js"></script>
+<script src="{{ asset('admin') }}/vendor/chart.js/c hart.umd.js"></script>
 <script src="{{ asset('admin') }}/vendor/echarts/echarts.min.js"></script>
 <script src="{{ asset('admin') }}/vendor/quill/quill.min.js"></script>
 <script src="{{ asset('admin') }}/vendor/simple-datatables/simple-datatables.js"></script>

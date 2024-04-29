@@ -41,9 +41,9 @@
                 </div>
                 @endif
 
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormTransaksi">
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormTransaksi">
                     <i class="bi bi-plus"></i> Tambah Transaksi
-                </button>
+                </button> -->
                 @include('transaksi.data')
             </div>
         </div>

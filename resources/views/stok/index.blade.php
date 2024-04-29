@@ -107,13 +107,13 @@
             // Membedakan Input Atau Edit
             if (mode === 'edit') {
                 modal.find('.modal-title').text('Edit Data')
-                modal.find('#menu_id').val(menu_id).prop('disabled', true)
+                modal.find('#menu_id').val(menu_id).prop('readonly', true).css('pointer-events', 'none').css('background-color', '#eee')
                 modal.find('#jumlah').val(jumlah)
                 modal.find('#method').html('@method("PUT")')
                 modal.find('form').attr('action', `{{ url('stok') }}/${id}`)
             } else {
                 modal.find('.modal-title').text('Tambah Data')
-                modal.find('#menu_id').val('').prop('disabled', false)
+                modal.find('#menu_id').val('').prop('readonly', false)
                 modal.find('#jumlah').val('')
                 modal.find('#method').html('')
                 modal.find('form').attr('action', '{{ url("stok") }}')

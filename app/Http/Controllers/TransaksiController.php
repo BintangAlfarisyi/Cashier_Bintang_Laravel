@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Http\Requests\TransaksiRequest;
 use App\Models\DetailTransaksi;
+use App\Models\Menu;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
