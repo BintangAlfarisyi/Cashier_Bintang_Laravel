@@ -17,6 +17,7 @@ return new class extends Migration
             $table->double('total_harga');
             $table->string('metode_pembayaran');
             $table->string('keterangan');
+            $table->string('dibuat_oleh');
             $table->timestamps();
         });
     }

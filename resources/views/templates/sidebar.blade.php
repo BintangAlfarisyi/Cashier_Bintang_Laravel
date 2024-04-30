@@ -34,7 +34,7 @@
                         <i class="bi bi-circle"></i><span>Menu</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="/transaksi">
                         <i class="bi bi-circle"></i><span>Transaksi</span>
                     </a>
@@ -43,7 +43,7 @@
                     <a href="/detail_transaksi">
                         <i class="bi bi-circle"></i><span>Detail Transaksi</span>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li>
                     <a href="/meja">
                         <i class="bi bi-circle"></i><span>Meja</span>

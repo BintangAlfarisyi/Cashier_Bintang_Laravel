@@ -6,6 +6,7 @@ use App\Models\Transaksi;
 use App\Http\Requests\TransaksiRequest;
 use App\Models\DetailTransaksi;
 use App\Models\Menu;
+use App\Models\Stok;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -59,6 +60,9 @@ class TransaksiController extends Controller
             if (!$insertTransaksi) return 'error';
 
             foreach ($request->orderedList as $detail) {
+                $stok = Stok::where('menu_id', $detail['menu_id'])->first();
+                $stok->jumlah = $stok->jumlah - $detail['qty'];
+                $stok->save();
                 DetailTransaksi::create([
                     'transaksi_id' => $notrans,
                     'menu_id' => $detail['menu_id'],

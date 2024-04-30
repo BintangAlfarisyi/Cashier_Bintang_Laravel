@@ -21,26 +21,23 @@
 
         <div class="row gy-4">
 
-            <div class="col-xl-6">
-                <div class="card p-4">
+            <div class="col-xl-6 m-0">
+                <div class="p-4">
                     <div class="mb3">
                         <div class="row">
-                            <div class="col">
-                                <div class="collapsed mb-2">
+                            <div class="col-lg-6">
+                                <div class="info-box card">
                                     <i class="bi bi-geo-alt"></i>
-                                    <span>Jl. Ariawiratanudatar Kp. Pateken Rt 03 Rw 03</span>
-                                </div>
-                                <div class="collapsed mb-2">
-                                    <i class="bi bi-telephone"></i>
-                                    <span>+62 895 3261 46997</span>
-                                </div>
-                                <div class="collapsed mb-2">
-                                    <i class="ri-at-line"></i>
-                                    <span>Bego_official@gmail</span>
+                                    <h3>Address</h3>
+                                    <p>Jl. Ariawiratanudata Kp. Pateken Rt 03 Rw 03</p>
                                 </div>
                             </div>
-                            <div class="col">
-                                <img src="{{ asset('assets') }}/bego.jpg" alt="" style="width: 200px; height: 150px;">
+                            <div class="col-lg-6">
+                                <div class="info-box card">
+                                    <i class="bi bi-telephone"></i>
+                                    <h3>Call Us</h3>
+                                    <p>0895326146997<br>bntngal7@gmail.com</p>
+                                </div>
                             </div>
                         </div>
                     </div>
